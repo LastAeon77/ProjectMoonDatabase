@@ -12,20 +12,17 @@ import Link from "next/link";
 import CARD_IMAGE from "../assets/Cards.png";
 const lor = () => {
   return (
-    <div className="bg-lor font-square">
+    <div className="bg-lor bg-fixed font-square">
       <Navbar />
       <div className="flex flex-col items-center">
         <div className="decoration-clone h-screen w-3/4 px-5 text-yellow-300 content-center bg-black bg-opacity-50 font-lor font-extrabold">
-          {/* <div className="text-5xl grid place-items-center ">
-            Library of Ruina
-          </div> */}
           <div className="flex flex-row" style={{ minHeight: 100 }}>
             <div className="flex-1 grid place-items-center px-4">
               <Card
                 sx={{ minWidth: 275, borderRadius: "10%" }}
                 style={{ backgroundColor: "black" }}
               >
-                <Link href="/lor/card">
+                <Link href="/lor/cards">
                   <CardActionArea>
                     <CardMedia
                       component="img"
