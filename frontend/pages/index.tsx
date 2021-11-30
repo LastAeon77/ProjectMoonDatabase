@@ -5,6 +5,7 @@ import type { NextPage } from 'next'
 
 const Home: NextPage = () => {
   return (
+    
     <div>
       <h1>Welcome to AeonMoon</h1>
     </div>

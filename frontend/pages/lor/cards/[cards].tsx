@@ -8,7 +8,7 @@ import { One_Card, game_card } from "../../../components/card";
 axios.defaults.baseURL = "http://localhost:8000/";
 // axios.defaults.baseURL = "http://aeonmoon.herokuapp.com/"
 
-const page_number = (pageNumber: number) => {
+const page_number = (pageNumber: number,contentperpage:number) => {
   const card_per_page = 9;
   let pageNumArr: Array<number> = [];
   for (let i = 1; i <= Math.ceil(pageNumber / card_per_page) - 1; i++) {

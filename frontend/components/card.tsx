@@ -3,6 +3,7 @@ import axios from "axios";
 import Card from "@mui/material/Card";
 import CardMedia from "@mui/material/CardMedia";
 import CardActions from "@mui/material/CardActions";
+import { imgur_or_static } from "./misc";
 import Link from "next/link";
 export type game_card = {
     office: string;
@@ -137,14 +138,7 @@ export const Dice_Image = (dicetype: string) => {
         return null;
     }
   };
-export const imgur_or_static = (img_link: string) => {
-    // Django database sometimes has image as just links while other as pure static. We fix it here
-    if (img_link.slice(0, 8) === "LoR_Data") {
-      return `http://localhost:8000/static/${img_link}`;
-    } else {
-      return img_link;
-    }
-  };
+
 export const destroy_NULL = (obj: game_card) => {
     // dJango REST returns null property as string NULL. So We clear it here
     for (const property in obj) {

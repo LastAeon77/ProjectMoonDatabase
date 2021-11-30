@@ -6,7 +6,7 @@ module.exports = {
   theme: {
     extend: {
       backgroundImage: {
-        lor: 'url("../assets/Library_Background.jpg")',
+        lor: 'url("../public/static/assets/Library_Background.jpg")',
       },
       fontFamily: {
         lor: ["Nanum Gothic"],

@@ -9,7 +9,6 @@ import Typography from "@mui/material/Typography";
 import CardActionArea from "@mui/material/CardActionArea";
 import Link from "next/link";
 
-import CARD_IMAGE from "../assets/Cards.png";
 const lor = () => {
   return (
     <div className="bg-lor bg-fixed font-square">
