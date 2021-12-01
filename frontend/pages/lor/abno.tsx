@@ -31,7 +31,7 @@ type floorhidden = {
 axios.defaults.baseURL = "http://localhost:8000/";
 
 const render_cards = (
-  data: Array<abno_card>,
+  data: Array<abno_card>|undefined,
   floor_name: string,
   hidden: boolean
 ) => {
@@ -61,7 +61,7 @@ const render_cards = (
   );
 };
 
-const abno = () => {
+const Abno = () => {
   // const [dataRaw, setdataRaw] = useState<Array<abno_card> | null>();
   const [data, setdata] = useState<floor | null>();
   const [hidden, sethidden] = useState<floorhidden>({
@@ -371,4 +371,4 @@ const abno = () => {
   );
 };
 
-export default abno;
+export default Abno;

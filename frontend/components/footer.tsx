@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { useState } from "react";
-const footer = () => {
+const Footer = () => {
     const [mode, setMode] = useState("auto");
     return (
         <div className="pt-12">
@@ -164,4 +164,4 @@ const footer = () => {
         </div>
     );
 };
-export default footer;
+export default Footer;

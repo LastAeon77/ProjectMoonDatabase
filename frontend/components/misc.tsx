@@ -1,31 +1,5 @@
 import Link from "next/link";
-import { abno_card } from "./abnormality";
-import { game_card } from "./card";
-export const render_cards = (
-  data: Array<abno_card | game_card>,
-  floor_name: string,
-  hidden: boolean
-) => {
-  return (
-    <div className={hidden ? "hidden" : undefined}>
-      <div>{floor_name}</div>
-      <div className="flex flex-row justify-center">
-        <div>
-          {data &&
-            data.map((object, i) => (i % 3 == 0 ? one_abno(object) : null))}
-        </div>
-        <div>
-          {data &&
-            data.map((object, i) => (i % 3 == 1 ? one_abno(object) : null))}
-        </div>
-        <div>
-          {data &&
-            data.map((object, i) => (i % 3 == 2 ? one_abno(object) : null))}
-        </div>
-      </div>
-    </div>
-  );
-};
+
 
 export const imgur_or_static = (img_link: string) => {
   // Django database sometimes has image as just links while other as pure static. We fix it here
@@ -46,8 +20,8 @@ export const page_number = (
   }
   return (
     pageNumArr &&
-    pageNumArr.map((object) => (
-      <Link href={link + String(object)}>
+    pageNumArr.map((object,key) => (
+      <Link href={link + String(object)} passHref key={key}>
         <button className="bg-white-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
           {object}
         </button>

@@ -1,5 +1,7 @@
 import { Box } from "@mui/system";
 import { imgur_or_static } from "./misc";
+import Image from 'next/image'
+
 export type abno_card = {
   id: number;
   office: string;
@@ -45,10 +47,10 @@ export const one_abno = (data: abno_card) => {
           <div className="flex flex-row items-left text-white">
             <div className="flex flex-col items-center justify-center">
               <div className="w-48">
-                <img
+                <Image
                   src={data.ImgPath && imgur_or_static(data.ImgPath)}
                   alt="Image"
-                  width="800"
+                  width={800}
                 />
               </div>
               <div>{data?.emotion_level}</div>

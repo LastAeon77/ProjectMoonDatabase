@@ -16,8 +16,8 @@ const page_number = (pageNumber: number,contentperpage:number) => {
   }
   return (
     pageNumArr &&
-    pageNumArr.map((object) => (
-      <Link href={"/lor/cards/" + String(object)}>
+    pageNumArr.map((object,key) => (
+      <Link href={"/lor/cards/" + String(object)} key={key} passHref>
         <button className="bg-white-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
           {object}
         </button>
@@ -25,7 +25,7 @@ const page_number = (pageNumber: number,contentperpage:number) => {
     ))
   );
 };
-const cards = () => {
+const Cards = () => {
   const card_per_page: number = 9;
   // Getting data by sending request to backend
   const [dataRaw, setdataRaw] = useState<Array<game_card> | null>();
@@ -33,7 +33,6 @@ const cards = () => {
   const [pageNumber, setpageNumber] = useState<number>(50);
   const router = useRouter();
   React.useEffect(() => {
-    const pid = parseInt(router.query.cards as string, 10);
     axios
       .get("lor/api/card/")
       .then((res) => {
@@ -67,10 +66,10 @@ const cards = () => {
             </div>
           </div>
         </div>
-        <div className="box-border w-2/3">{page_number(pageNumber)}</div>
+        <div className="box-border w-2/3">{page_number(pageNumber,9)}</div>
       </div>
     </div>
   );
 };
 
-export default cards;
+export default Cards;

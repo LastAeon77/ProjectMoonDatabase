@@ -21,7 +21,7 @@ const lor = () => {
                 sx={{ minWidth: 275, borderRadius: "10%" }}
                 style={{ backgroundColor: "black" }}
               >
-                <Link href="/lor/cards">
+                <Link href="/lor/cards" passHref>
                   <CardActionArea>
                     <CardMedia
                       component="img"
@@ -46,7 +46,7 @@ const lor = () => {
                 sx={{ minWidth: 275, borderRadius: "10%" }}
                 style={{ backgroundColor: "black" }}
               >
-                <Link href="/lor/card">
+                <Link href="/lor/card" passHref>
                   <CardActionArea>
                     <CardMedia
                       component="img"
@@ -71,7 +71,7 @@ const lor = () => {
                 sx={{ minWidth: 300, borderRadius: "10%", minHeight: 430 }}
                 style={{ backgroundColor: "black" }}
               >
-                <Link href="/lor/card">
+                <Link href="/lor/card" passHref>
                   <CardActionArea>
                     <CardMedia
                       component="img"

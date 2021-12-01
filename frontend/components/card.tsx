@@ -5,165 +5,172 @@ import CardMedia from "@mui/material/CardMedia";
 import CardActions from "@mui/material/CardActions";
 import { imgur_or_static } from "./misc";
 import Link from "next/link";
+import Image from "next/dist/client/image";
 export type game_card = {
-    office: string;
-    rank: string;
-    Name: string;
-    Cost: number;
-    On_Play_Effect: string | null;
-    Dice_Number: number;
-    ImgPath: string | null;
-    Roll1: string | null;
-    Rarity: string | null;
-    Eff1: string | null;
-    Type1: string | null;
-    CardType: string;
-    Roll2: string | null;
-    Eff2: string | null;
-    Type2: string | null;
-    Roll3: string | null;
-    Eff3: string | null;
-    Type3: string | null;
-    Roll4: string | null;
-    Eff4: string | null;
-    Type4: string | null;
-    Roll5: string | null;
-    Eff5: string | null;
-    Type5: string | null;
-    slug: string;
-  };
+  office: string;
+  rank: string;
+  Name: string;
+  Cost: number;
+  On_Play_Effect: string | null;
+  Dice_Number: number;
+  ImgPath: string | null;
+  Roll1: string | null;
+  Rarity: string | null;
+  Eff1: string | null;
+  Type1: string | null;
+  CardType: string;
+  Roll2: string | null;
+  Eff2: string | null;
+  Type2: string | null;
+  Roll3: string | null;
+  Eff3: string | null;
+  Type3: string | null;
+  Roll4: string | null;
+  Eff4: string | null;
+  Type4: string | null;
+  Roll5: string | null;
+  Eff5: string | null;
+  Type5: string | null;
+  slug: string;
+};
+
 export const Dice_Image = (dicetype: string) => {
-    // This assigns dice images to each name
-    switch (dicetype) {
-      case "Blunt":
-        return (
-          <img
+  // This assigns dice images to each name
+  switch (dicetype) {
+    case "Blunt":
+      return (
+          <Image
             src="/static/dice_type/AtkBlunt.png"
             alt="Blunt"
-            height="50"
-            width="50"
+            height={50}
+            width={50}
           />
-        );
-      case "Thurst":
-        return (
-          <img
-            src="/static/dice_type/AtkPierce.png"
-            alt="Thrust"
-            height="50"
-            width="50"
-          />
-        );
-      case "Pierce":
-        return (
-          <img
-            src="/static/dice_type/AtkPierce.png"
-            alt="Thrust"
-            height="50"
-            width="50"
-          />
-        );
-      case "Slash":
-        return (
-          <img
-            src="/static/dice_type/AtkSlash.png"
-            alt="Slash"
-            height="50"
-            width="50"
-          />
-        );
-      case "Evade":
-        return (
-          <img
-            src="/static/dice_type/DefEvade.png"
-            alt="Evade"
-            height="50"
-            width="50"
-          />
-        );
-      case "Block":
-        return (
-          <img
-            src="/static/dice_type/DefGuard.png"
-            alt="Block"
-            height="50"
-            width="50"
-          />
-        );
-      case "Blunt Counter":
-        return (
-          <img
-            src="/static/dice_type/StandbyBlunt.png"
-            alt="Blunt Counter"
-            height="50"
-            width="50"
-          />
-        );
-      case "Pierce Counter":
-        return (
-          <img
-            src="/static/dice_type/StandbyPierce.png"
-            alt="Thrust Counter"
-            height="50"
-            width="50"
-          />
-        );
-      case "Slash Counter":
-        return (
-          <img
-            src="/static/dice_type/StandbySlash.png"
-            alt="Slash Counter"
-            height="50"
-            width="50"
-          />
-        );
-      case "Evade Counter":
-        return (
-          <img
-            src="/static/dice_type/StandbyEvade.png"
-            alt="Evade Counter"
-            height="50"
-            width="50"
-          />
-        );
-      case "Block Counter":
-        return (
-          <img
-            src="/static/dice_type/StandbyGuard.png"
-            alt="Block Counter"
-            height="50"
-            width="50"
-          />
-        );
-      default:
-        return null;
-    }
-  };
+      );
+    case "Thurst":
+      return (
+        <Image
+          src="/static/dice_type/AtkPierce.png"
+          alt="Thrust"
+          height={50}
+          width={50}
+        />
+      );
+    case "Pierce":
+      return (
+        <Image
+          src="/static/dice_type/AtkPierce.png"
+          alt="Thrust"
+          height={50}
+          width={50}
+        />
+      );
+    case "Slash":
+      return (
+        <Image
+          src="/static/dice_type/AtkSlash.png"
+          alt="Slash"
+          height={50}
+          width={50}
+        />
+      );
+    case "Evade":
+      return (
+        <Image
+          src="/static/dice_type/DefEvade.png"
+          alt="Evade"
+          height={50}
+          width={50}
+        />
+      );
+    case "Block":
+      return (
+        <Image
+          src="/static/dice_type/DefGuard.png"
+          alt="Block"
+          height={50}
+          width={50}
+        />
+      );
+    case "Blunt Counter":
+      return (
+        <Image
+          src="/static/dice_type/StandbyBlunt.png"
+          alt="Blunt Counter"
+          height={50}
+          width={50}
+        />
+      );
+    case "Pierce Counter":
+      return (
+        <Image
+          src="/static/dice_type/StandbyPierce.png"
+          alt="Thrust Counter"
+          height={50}
+          width={50}
+        />
+      );
+    case "Slash Counter":
+      return (
+        <Image
+          src="/static/dice_type/StandbySlash.png"
+          alt="Slash Counter"
+          height={50}
+          width={50}
+        />
+      );
+    case "Evade Counter":
+      return (
+        <Image
+          src="/static/dice_type/StandbyEvade.png"
+          alt="Evade Counter"
+          height={50}
+          width={50}
+        />
+      );
+    case "Block Counter":
+      return (
+        <Image
+          src="/static/dice_type/StandbyGuard.png"
+          alt="Block Counter"
+          height={50}
+          width={50}
+        />
+      );
+    default:
+      return null;
+  }
+};
 
-export const destroy_NULL = (obj: game_card) => {
-    // dJango REST returns null property as string NULL. So We clear it here
-    for (const property in obj) {
-      if (obj[property] === "NULL") {
-        obj[property] = null;
-      }
+export const destroy_NULL = (obj: any) => {
+  // dJango REST returns null property as string NULL. So We clear it here
+  // keys.forEach((key,index) => {
+  //   if (obj[key] === "NULL"){
+  //     obj[key] = null
+  //   }
+  // })
+  for (let keys in obj) {
+    if (obj[keys] === "NULL") {
+      obj[keys] = null as any;
     }
-    return obj;
-  };
+  }
+  return obj;
+};
 export const color_assign = (str: string | null) => {
-    switch (str) {
-      case "Objet d'art":
-        return "gold";
-      case "Paperback":
-        return "green";
-      case "Hardcover":
-        return "blue";
-      case "Limited":
-        return "purple";
-      case "EGO":
-        return "red";
-      default:
-        return "green";
-    }
-  };
+  switch (str) {
+    case "Objet d'art":
+      return "gold";
+    case "Paperback":
+      return "green";
+    case "Hardcover":
+      return "blue";
+    case "Limited":
+      return "purple";
+    case "EGO":
+      return "red";
+    default:
+      return "green";
+  }
+};
 export const One_Card = (data2: game_card) => {
   // Generate the Card Element
   const data = destroy_NULL(data2);
