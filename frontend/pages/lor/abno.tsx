@@ -28,7 +28,6 @@ type floorhidden = {
   religion: boolean;
   general: boolean;
 };
-axios.defaults.baseURL = "http://localhost:8000/";
 
 const render_cards = (
   data: Array<abno_card>|undefined,

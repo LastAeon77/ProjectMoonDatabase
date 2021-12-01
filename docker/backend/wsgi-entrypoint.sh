@@ -5,8 +5,16 @@ do
     echo "Waiting for server volume..."
 done
 
-until ./manage.py migrate
+until python3 ./manage.py makemigrations
 do
+    echo $(ls)
+    echo "Making migrations"
+    sleep 2
+done
+
+until python3 ./manage.py migrate
+do
+    echo $(ls)
     echo "Waiting for db to be ready..."
     sleep 2
 done

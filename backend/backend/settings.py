@@ -32,9 +32,9 @@ with open("../settings.json", "r") as f:
 SECRET_KEY = data["djangoKey"]
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
-ALLOWED_HOSTS = ["localhost", "127.0.0.1"]
+ALLOWED_HOSTS = ["localhost", "0.0.0.0", "127.0.0.1"]
 
 
 # Application definition
@@ -88,26 +88,26 @@ WSGI_APPLICATION = "backend.wsgi.application"
 
 
 DATABASES = {
-    "default": {
-        "ENGINE": "django.db.backends.postgresql_psycopg2",
-        "NAME": data["name"],
-        "USER": data["user"],
-        "PASSWORD": data["sqlPassword"],
-        "HOST": data["host"],
-        "PORT": data["port"],
-    }
+    # "default": {
+    #     "ENGINE": "django.db.backends.postgresql_psycopg2",
+    #     "NAME": data["name"],
+    #     "USER": data["user"],
+    #     "PASSWORD": data["sqlPassword"],
+    #     "HOST": data["host"],
+    #     "PORT": data["port"],
+    # }
     # 'default': {
     #     'ENGINE': 'django.db.backends.sqlite3',
     #     'NAME': BASE_DIR / 'db.sqlite3',
     # }
-    # "default": {
-    #     "ENGINE": "django_postgres_extensions.backends.postgresql",
-    #     "NAME": "demo",
-    #     "USER": "demo",
-    #     "HOST": "localhost",
-    #     "PORT": 5432,
-    #     "PASSWORD": "demo",
-    # }
+    "default": {
+        "ENGINE": "django.db.backends.postgresql_psycopg2",
+        "NAME": os.environ.get('POSTGRES_NAME'),
+        "USER": "demo",
+        "HOST": "localhost",
+        "PORT": 5432,
+        "PASSWORD": "demo",
+    }
 }
 
 

@@ -4,6 +4,10 @@ FROM python:3.8.3-alpine
 
 WORKDIR /app
 ADD ./backend/requirements.txt /app/backend/
+ADD ./settings.json /app/
+
+ENV PYTHONDONTWRITEBYTECODE 1
+ENV PYTHONUNBUFFERED 1
 
 RUN \
  apk add --no-cache postgresql-libs && \

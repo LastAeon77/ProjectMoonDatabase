@@ -5,7 +5,7 @@ import Navbar from "../../../components/navbar";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { One_Card, game_card } from "../../../components/card";
-axios.defaults.baseURL = "http://localhost:8000/";
+// axios.defaults.baseURL = "http://localhost:8000/";
 // axios.defaults.baseURL = "http://aeonmoon.herokuapp.com/"
 
 const page_number = (pageNumber: number,contentperpage:number) => {
