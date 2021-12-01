@@ -1,0 +1,54 @@
+version: '2'
+
+services:
+    nginx: 
+        restart: unless-stopped
+        build:
+            context: .
+            dockerfile: ./docker/nginx/Dockerfile
+        ports:
+            - 80:80
+        volumes:
+            - static_volume:/app/backend/static
+            - ./docker/nginx/development:/etc/nginx/conf.d
+        depends_on: 
+            - backend
+    backend:
+        restart: unless-stopped
+        build:
+            context: .
+            dockerfile: ./docker/backend/Dockerfile
+        volumes:
+            
+        entrypoint: /app/docker/backend/wsgi-entrypoint.sh
+        volumes:
+            - static_volume:/app/backend/static
+        expose:
+            - 8000
+    db:
+        restart: always
+        image: postgres
+        container_name: demo-postgres
+        environment:
+            - POSTGRES_USER=demo
+            - POSTGRES_PASSWORD=demo
+            - POSTGRES_DB=demo
+            - POSTGRES_PORT=5432
+        ports:
+            - "5432:5432"
+        volumes:
+            - postgres_data:/var/lib/postgresql/data/
+    pgadmin:
+        image: dpage/pgadmin4
+        container_name: demo-pgadmin #you can change this
+        depends_on:
+            - db
+        ports:
+            - "5051:80"
+        environment:
+            PGADMIN_DEFAULT_EMAIL: pgadmin4@pgadmin.org
+            PGADMIN_DEFAULT_PASSWORD: root
+        restart: always
+volumes:
+    static_volume: {}
+    postgres_data:

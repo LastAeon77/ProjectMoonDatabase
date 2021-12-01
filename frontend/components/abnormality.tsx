@@ -47,10 +47,11 @@ export const one_abno = (data: abno_card) => {
           <div className="flex flex-row items-left text-white">
             <div className="flex flex-col items-center justify-center">
               <div className="w-48">
-                <Image
+                <img
                   src={data.ImgPath && imgur_or_static(data.ImgPath)}
                   alt="Image"
                   width={800}
+                  height = {400}
                 />
               </div>
               <div>{data?.emotion_level}</div>
