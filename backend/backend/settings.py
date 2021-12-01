@@ -32,7 +32,7 @@ with open("../settings.json", "r") as f:
 SECRET_KEY = data["djangoKey"]
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = ["localhost", "127.0.0.1"]
 
@@ -144,6 +144,8 @@ CORS_ORIGIN_WHITELIST = ["http://localhost:3000"]
 CORS_ORIGIN_ALLOW_ALL = True
 
 # STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
-STATIC_URL = "/static/"
+MEDIA_URL = "/media/"
 
+STATIC_URL = "/static/"
+STATIC_ROOT = BASE_DIR / "static"
 STATICFILES_DIRS = (os.path.join(BASE_DIR, "static"),)
