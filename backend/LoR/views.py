@@ -13,6 +13,7 @@ from .models import (
     AbnoCards,
     Effects,
 )
+
 # from .forms import DeckMakerForm, GuideMakerForm
 from django.urls import reverse
 import collections
@@ -54,3 +55,10 @@ class EffectListView(generics.ListAPIView):
 class CardListView(generics.ListAPIView):
     queryset = Card.objects.all()
     serializer_class = CardSerializers
+
+
+class CardView(generics.RetrieveAPIView):
+    queryset = Card.objects.all()
+    serializer_class = CardSerializers
+    lookup_field = "slug"
+

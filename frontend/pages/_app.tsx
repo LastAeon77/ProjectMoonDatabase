@@ -24,7 +24,11 @@ function MyApp({ Component, pageProps }: AppProps) {
   if (pageLoading) {
     return <div>Loading</div>;
   } else {
-    return <Component {...pageProps} />;
+    return (
+      <div className="font-lor font-extrabold text-xl">
+        <Component {...pageProps} />
+      </div>
+    );
   }
   // return ({pageLoading ? (<div>Loading</div>) : <Component {...pageProps} />})
   // return (<Component {...pageProps} />)

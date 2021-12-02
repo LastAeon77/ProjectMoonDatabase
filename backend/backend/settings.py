@@ -88,26 +88,26 @@ WSGI_APPLICATION = "backend.wsgi.application"
 
 
 DATABASES = {
-    # "default": {
-    #     "ENGINE": "django.db.backends.postgresql_psycopg2",
-    #     "NAME": data["name"],
-    #     "USER": data["user"],
-    #     "PASSWORD": data["sqlPassword"],
-    #     "HOST": data["host"],
-    #     "PORT": data["port"],
-    # }
+    "default": {
+        "ENGINE": "django.db.backends.postgresql_psycopg2",
+        "NAME": data["name"],
+        "USER": data["user"],
+        "PASSWORD": data["sqlPassword"],
+        "HOST": data["host"],
+        "PORT": data["port"],
+    }
     # 'default': {
     #     'ENGINE': 'django.db.backends.sqlite3',
     #     'NAME': BASE_DIR / 'db.sqlite3',
     # }
-    "default": {
-        "ENGINE": "django.db.backends.postgresql_psycopg2",
-        "NAME": os.environ.get('POSTGRES_NAME'),
-        "USER": "demo",
-        "HOST": "localhost",
-        "PORT": 5432,
-        "PASSWORD": "demo",
-    }
+    # "default": {
+    #     "ENGINE": "django.db.backends.postgresql_psycopg2",
+    #     "NAME": os.environ.get('POSTGRES_NAME'),
+    #     "USER": "demo",
+    #     "HOST": "localhost",
+    #     "PORT": 5432,
+    #     "PASSWORD": "demo",
+    # }
 }
 
 
@@ -155,5 +155,5 @@ CORS_ORIGIN_ALLOW_ALL = True
 MEDIA_URL = "/media/"
 
 STATIC_URL = "/static/"
-STATIC_ROOT = BASE_DIR / "static"
-# STATICFILES_DIRS = (os.path.join(BASE_DIR, "static"),)
+STATIC_ROOT = BASE_DIR / "staticfiles"
+STATICFILES_DIRS = (os.path.join(BASE_DIR, "static"),)

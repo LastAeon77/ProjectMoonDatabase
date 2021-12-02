@@ -34,7 +34,7 @@ const Cards = () => {
   const router = useRouter();
   React.useEffect(() => {
     axios
-      .get("lor/api/card/")
+      .get("lor/api/card")
       .then((res) => {
         setdataRaw(res.data as Array<game_card>);
         setpageNumber(res.data.length - 1);

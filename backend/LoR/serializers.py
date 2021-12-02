@@ -38,6 +38,8 @@ class DeckSerializers(serializers.ModelSerializer):
 class CardSerializers(serializers.ModelSerializer):
     office = serializers.StringRelatedField(read_only=True)
     rank = serializers.ReadOnlyField(source="office.Rank.Name")
+    rank_picture = serializers.ReadOnlyField(source="office.Rank.ImgPath")
+    office_picture = serializers.ReadOnlyField(source="office.ImgPath")
     Rarity = serializers.SerializerMethodField()
     Type1 = serializers.SerializerMethodField()
     Type2 = serializers.SerializerMethodField()
@@ -48,9 +50,13 @@ class CardSerializers(serializers.ModelSerializer):
 
     class Meta:
         model = Card
+        lookup_field = "slug"
+        extra_kwargs = {"url": {"lookup_field": "slug"}}
         fields = (
             "office",
             "rank",
+            "rank_picture",
+            "office_picture",
             "Name",
             "Obtainable",
             "Cost",
@@ -117,3 +123,4 @@ class EffectSerializers(serializers.ModelSerializer):
     class Meta:
         model = Effects
         fields = ["Name", "Description"]
+
