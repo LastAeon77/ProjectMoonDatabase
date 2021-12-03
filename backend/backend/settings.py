@@ -30,7 +30,7 @@ with open("../settings.json", "r") as f:
 # SECURITY WARNING: keep the secret key used in production secret!
 
 SECRET_KEY = data["djangoKey"]
-
+JWT_SECRET_KEY = "My jwt secret key"
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
@@ -46,10 +46,35 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
-    "corsheaders",
-    "LoR",
+    # Thirdparty
     "rest_framework",
+    "rest_framework.authtoken",
+    "corsheaders",
+    "django.contrib.sites",
+    # Authentication
+    "dj_rest_auth",
+    "dj_rest_auth.registration",
+    "allauth",
+    "allauth.account",
+    "allauth.socialaccount",
+    "allauth.socialaccount.providers.google",
+    # local
+    "nextjsdrfauth",
+    "LoR",
 ]
+
+SOCIALACCOUNT_PROVIDERS = {
+    "google": {
+        "SCOPE": ["profile", "email",],
+        "AUTH_PARAMS": {"access_type": "online",},
+    }
+}
+SOCIALACCOUNT_EMAIL_VERIFICATION = "none"
+SOCIALACCOUNT_EMAIL_REQUIRED = False
+
+SITE_ID = 1
+REST_USE_JWT = True  # use JSON web tokens
+
 
 MIDDLEWARE = [
     "corsheaders.middleware.CorsMiddleware",
@@ -61,6 +86,20 @@ MIDDLEWARE = [
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
 ]
+
+from datetime import timedelta
+
+SIMPLE_JWT = {
+    "ACCESS_TOKEN_LIFETIME": timedelta(minutes=60),
+    "REFRESH_TOKEN_LIFETIME": timedelta(days=7),
+    "ROTATE_REFRESH_TOKENS": True,
+    "BLACKLIST_AFTER_rotation": True,
+    "UPDATE_LAST_LOGIN": True,
+    "USER_ID_FIELD": "userId",
+    "USER_ID_CLAIM": "user_id",
+    "SIGNING_KEY": JWT_SECRET_KEY,
+}
+
 
 ROOT_URLCONF = "backend.urls"
 
@@ -123,7 +162,21 @@ AUTH_PASSWORD_VALIDATORS = [
     {"NAME": "django.contrib.auth.password_validation.NumericPasswordValidator",},
 ]
 
+AUTH_USER_MODEL = "nextjsdrfauth.CustomUserModel"
+REST_AUTH_SERIALIZERS = {
+    "USER_DETAILS_SERIALIZER": "nextjsdrfauth.serializers.CustomUserModelSerializer"
+}
 
+REST_FRAMEWORK = {
+    "DEFAULT_PERMISSION_CLASSES": (
+        "rest_framework.permissions.IsAuthenticated"
+    ),
+    "DEFAULT_AUTHENTICATION_CLASSES": (
+        'rest_framework.authentication.BasicAuthentication',
+        'rest_framework.authentication.SessionAuthentication',
+        'dj_rest_auth.utils.JWTCookieAuthentication',
+    ),
+}
 # Internationalization
 # https://docs.djangoproject.com/en/3.2/topics/i18n/
 
@@ -149,7 +202,7 @@ STATIC_URL = "/static/"
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 CORS_ORIGIN_WHITELIST = ["http://localhost:3000"]
-CORS_ORIGIN_ALLOW_ALL = True
+# CORS_ORIGIN_ALLOW_ALL = True
 
 # STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
 MEDIA_URL = "/media/"

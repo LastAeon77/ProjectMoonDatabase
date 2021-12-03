@@ -13,6 +13,7 @@ from .models import (
     AbnoCards,
     Effects,
 )
+from rest_framework.permissions import AllowAny
 
 # from .forms import DeckMakerForm, GuideMakerForm
 from django.urls import reverse
@@ -33,31 +34,49 @@ from .serializers import (
 
 
 class rankSerial(generics.RetrieveAPIView):
+    permission_classes = [
+        AllowAny,
+    ]
     queryset = Rank.objects.all()
     serializer_class = RankSerializers
 
 
 class deckSerail(generics.RetrieveAPIView):
+    permission_classes = [
+        AllowAny,
+    ]
     queryset = Deck.objects.all()
     serializer_class = DeckSerializers
 
 
 class AbnoViewSet(generics.ListAPIView):
+    permission_classes = [
+        AllowAny,
+    ]
     queryset = AbnoCards.objects.all()
     serializer_class = AbnoSerializers
 
 
 class EffectListView(generics.ListAPIView):
+    permission_classes = [
+        AllowAny,
+    ]
     queryset = Effects.objects.all()
     serializer_class = EffectSerializers
 
 
 class CardListView(generics.ListAPIView):
+    permission_classes = [
+        AllowAny,
+    ]
     queryset = Card.objects.all()
     serializer_class = CardSerializers
 
 
 class CardView(generics.RetrieveAPIView):
+    permission_classes = [
+        AllowAny,
+    ]
     queryset = Card.objects.all()
     serializer_class = CardSerializers
     lookup_field = "slug"
