@@ -17,10 +17,7 @@ from django.contrib import admin
 from django.urls import path, include
 
 urlpatterns = [
-    path("admin/", admin.site.urls),
-    path("lor/", include("LoR.urls")),
-    path(
-        "api/auth", include("dj_rest_auth.urls")
-    ),  # dj rest auth takes care of this for us
-    path("api/social/login/", include("nextjsdrfauth.urls")),
+    path('admin/', admin.site.urls),
+    path('lor/', include("LoR.urls")),
+    path('api/',include("users.urls"))
 ]
