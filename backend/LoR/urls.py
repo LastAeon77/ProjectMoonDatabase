@@ -11,4 +11,5 @@ urlpatterns = [
     path("api/abno/", views.AbnoViewSet.as_view(), name="AbnoAPIView"),
     path("api/effects", views.EffectListView.as_view(), name="Effects"),
     path("api/card/<slug:slug>", views.CardView.as_view(), name="SingleCardView"),
+    path("api/cardtest/", views.CardListView2.as_view(), name="CardTestAPI"),
 ] + staticfiles_urlpatterns()

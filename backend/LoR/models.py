@@ -2,6 +2,7 @@ from django.db import models
 from django.utils.translation import gettext_lazy as laz
 from django.core.validators import MaxValueValidator, MinValueValidator
 from django.conf import settings
+from django.contrib.auth import get_user_model
 
 
 # model for Ranks
@@ -185,9 +186,10 @@ class Card(models.Model):
 # model for decks
 class Deck(models.Model):
     name = models.CharField(max_length=50, unique=True)
-    creator = models.ForeignKey(
-        settings.AUTH_USER_MODEL, on_delete=models.CASCADE, null=True
-    )
+    # creator = models.ForeignKey(
+    #     settings.AUTH_USER_MODEL, on_delete=models.CASCADE, null=True
+    # )
+    creator = models.ForeignKey(get_user_model(), on_delete=models.CASCADE, null=True)
     description = models.TextField()
     cards = models.ManyToManyField(Card, through="RelDeck")
     Recc_Floor = models.ForeignKey(
@@ -224,9 +226,10 @@ class RelDeck(models.Model):
 # guide model
 class Guide(models.Model):
     name = models.CharField(max_length=50, unique=True)
-    creator = models.ForeignKey(
-        settings.AUTH_USER_MODEL, on_delete=models.CASCADE, null=True
-    )
+    # creator = models.ForeignKey(
+    #     settings.AUTH_USER_MODEL, on_delete=models.CASCADE, null=True
+    # )
+    creator = models.ForeignKey(get_user_model(), on_delete=models.CASCADE, null=True)
     description = models.TextField()
     Recc_Floor = models.ForeignKey(
         Office, on_delete=models.CASCADE, null=True, blank=True

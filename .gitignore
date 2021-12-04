@@ -5,6 +5,8 @@ frontend/assets
 latest.dump
 frontend/public/static
 frontend/ngrok.exe
+backend/users/__pycache__
+backend/users/migrations/__pycache__
 # See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
 
 # dependencies
@@ -52,3 +54,4 @@ backend/LoR/migrations/__pycache__
 
 *.so
 *.log
+frontend/ngrok.exe
