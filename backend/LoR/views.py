@@ -13,7 +13,8 @@ from .models import (
     AbnoCards,
     Effects,
 )
-from rest_framework.permissions import AllowAny
+from rest_framework.response import Response
+
 
 # from .forms import DeckMakerForm, GuideMakerForm
 from django.urls import reverse
@@ -27,9 +28,10 @@ from .serializers import (
     RankSerializers,
     AbnoSerializers,
     EffectSerializers,
+    DeckCreatorSerializer,
 )
 from rest_framework.views import APIView
-from rest_framework import permissions
+from rest_framework import status, permissions
 
 # DetailView will fetch a certain row through its unique id in url
 # ListView will fetch all rows of a Relation
@@ -58,6 +60,7 @@ class EffectListView(generics.ListAPIView):
     queryset = Effects.objects.all()
     serializer_class = EffectSerializers
 
+
 class CardListView(generics.ListAPIView):
     permission_classes = (permissions.AllowAny,)
     queryset = Card.objects.all()
@@ -70,9 +73,22 @@ class CardView(generics.RetrieveAPIView):
     serializer_class = CardSerializers
     lookup_field = "slug"
 
+
 class CardListView2(generics.ListAPIView):
     queryset = Card.objects.all()
     serializer_class = CardSerializers
+
+
+class DeckCreate(APIView):
+    def post(self, request, format="json"):
+        serializer = DeckCreatorSerializer(data=request.data)
+        if serializer.is_valid():
+            deck = serializer.save()
+            if deck:
+                json = serializer.data
+                return Response(json, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
 
 # class CreateCard(generics.APIView):
 #     def get(self,request,format=None):

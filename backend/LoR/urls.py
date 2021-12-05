@@ -12,4 +12,5 @@ urlpatterns = [
     path("api/effects", views.EffectListView.as_view(), name="Effects"),
     path("api/card/<slug:slug>", views.CardView.as_view(), name="SingleCardView"),
     path("api/cardtest/", views.CardListView2.as_view(), name="CardTestAPI"),
+    path("api/deck/", views.DeckCreate.as_view(), name="DeckCreate"),
 ] + staticfiles_urlpatterns()
