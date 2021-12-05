@@ -1,5 +1,6 @@
 from django.http import HttpResponseRedirect
-from django.shortcuts import render
+import json
+from django.http import QueryDict
 from .models import (
     Office,
     Rank,
@@ -29,6 +30,8 @@ from .serializers import (
     AbnoSerializers,
     EffectSerializers,
     DeckCreatorSerializer,
+    CardIDSerializer,
+    RelDeckSerializer,
 )
 from rest_framework.views import APIView
 from rest_framework import status, permissions
@@ -81,13 +84,42 @@ class CardListView2(generics.ListAPIView):
 
 class DeckCreate(APIView):
     def post(self, request, format="json"):
-        serializer = DeckCreatorSerializer(data=request.data)
+        new_request = request.data.copy()
+        new_request["effect"] = list(map(int, new_request["effect"].split(",")))
+        new_request["cards"] = list(map(str, new_request["cards"].split("|")))
+        new_request["cards"] = list(map(json.loads, new_request["cards"]))
+        new_request["creator"] = request.user.id
+        curr_effects = new_request.pop("effect")[
+            0
+        ]  # Take out effect to individually save it
+        curr_cards = new_request.pop("cards")[
+            0
+        ]  # Take out cards to individually save it
+        serializer = DeckCreatorSerializer(data=new_request)
+        print(curr_effects)
         if serializer.is_valid():
-            deck = serializer.save()
+            deck = serializer.save()  # Created a deck instance
+            curr_deck_pk = deck.pk
+            for ordinary_dict in curr_cards:
+                new_conn = RelDeck(
+                    card_id=Card.objects.get(id=ordinary_dict["card_id"]),
+                    deck_id=Deck.objects.get(id=curr_deck_pk),
+                    card_count=ordinary_dict["card_count"],
+                )
+                if new_conn:
+                    new_conn.save()
+            # Add all the effects in
+            for effs in curr_effects:
+                deck.effect.add(Effects.objects.get(id=effs))
             if deck:
-                json = serializer.data
-                return Response(json, status=status.HTTP_201_CREATED)
+                js = serializer.data
+                return Response(js, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+class CardNameID(generics.ListAPIView):
+    queryset = Card.objects.all()
+    serializers_class = CardIDSerializer
 
 
 # class CreateCard(generics.APIView):

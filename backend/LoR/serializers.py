@@ -122,53 +122,33 @@ class AbnoSerializers(serializers.ModelSerializer):
 class EffectSerializers(serializers.ModelSerializer):
     class Meta:
         model = Effects
-        fields = ["Name", "Description"]
+        fields = ["id", "Name", "Description"]
 
 
-# Card serializer deck post request
-class CardSerializerDeck(serializers.ModelSerializer):
+# # Card serializer deck post request
+# class CardSerializerDeck(serializers.ModelSerializer):
+#     class Meta:
+#         model = Card
+#         fields = "__all__"
+
+
+class DeckCreatorSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Card
-        fields = "__all__"
+        model = Deck
+        fields = ["name","creator","description","Recc_Floor","Recc_Page","Recc_Rank","show"]
 
 
 # RelDeck Serializer
-class RelDeckSerializer(serializers.HyperlinkedModelSerializer):
+class RelDeckSerializer(serializers.ModelSerializer):
     deck_id = serializers.ReadOnlyField()
     card_id = serializers.ReadOnlyField()
-
     class Meta:
         model = RelDeck
+        fields = ['deck_id','card_id','card_count']
 
 
-# Deck creator Serializer
-########
-# Example of validated data
-# {
-#         "id": 7,
-#         "name": "P Space",
-#         "description": "Just press P and then Spacebar",
-#         "show": true,
-#         "creator": 4,
-#         "Recc_Floor": null,
-#         "Recc_Page": null,
-#         "Recc_Rank": null,
-#         "cards": [
-#             594,
-#             589,
-#             593
-#         ],
-#         "effect": [324]
-#     },
-class DeckCreatorSerializer(serializers.ModelSerializer):
-    cards = RelDeckSerializer(many=True)
-
-    def create(self, validated_data):
-        cards = validated_data.pop("cards")
-        deck = Deck.objects.create(**validated_data)
-        return deck
-
+class CardIDSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Deck
-        fields = "__all__"
+        model = Card
+        fields = ["id", "Name", "ImgPath"]
 
