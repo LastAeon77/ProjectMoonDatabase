@@ -1,6 +1,4 @@
-from django.http import HttpResponseRedirect
 import json
-from django.http import QueryDict
 from .models import (
     Office,
     Rank,
@@ -15,13 +13,6 @@ from .models import (
     Effects,
 )
 from rest_framework.response import Response
-
-
-# from .forms import DeckMakerForm, GuideMakerForm
-from django.urls import reverse
-import collections
-from django.contrib.auth.decorators import login_required
-from django.views import generic  # generic.DetailView and generic.ListView
 from rest_framework import generics
 from .serializers import (
     DeckSerializers,
@@ -31,7 +22,8 @@ from .serializers import (
     EffectSerializers,
     DeckCreatorSerializer,
     CardIDSerializer,
-    RelDeckSerializer,
+    PageIDSerializer,
+    OfficeIDSerializer,
 )
 from rest_framework.views import APIView
 from rest_framework import status, permissions
@@ -120,11 +112,14 @@ class DeckCreate(APIView):
 
 class CardNameID(generics.ListAPIView):
     queryset = Card.objects.all()
-    serializers_class = CardIDSerializer
+    serializer_class = CardIDSerializer
 
 
-# class CreateCard(generics.APIView):
-#     def get(self,request,format=None):
-#         snippets = Card.objects.all()
-#         serializer = CardSerializers
-#         return Response()
+class PageID(generics.ListAPIView):
+    queryset = Page.objects.all()
+    serializer_class = PageIDSerializer
+
+
+class OfficeID(generics.ListAPIView):
+    queryset = Office.objects.all().filter(Rank=7)
+    serializer_class = OfficeIDSerializer

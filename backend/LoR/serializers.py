@@ -1,6 +1,5 @@
 from rest_framework import serializers
-from LoR.models import Deck, Card, Rank, RelDeck, AbnoCards, Effects
-from django.utils.translation import ngettext_lazy as unlaz
+from LoR.models import Deck, Card, Rank, RelDeck, AbnoCards, Effects, Page, Office
 
 
 class CardCountSerializers(serializers.ModelSerializer):
@@ -125,30 +124,43 @@ class EffectSerializers(serializers.ModelSerializer):
         fields = ["id", "Name", "Description"]
 
 
-# # Card serializer deck post request
-# class CardSerializerDeck(serializers.ModelSerializer):
-#     class Meta:
-#         model = Card
-#         fields = "__all__"
+class PageIDSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Page
+        fields = ["Name", "InGameId"]
+
+
+class OfficeIDSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Office
+        fields = ["id", "Name"]
 
 
 class DeckCreatorSerializer(serializers.ModelSerializer):
     class Meta:
         model = Deck
-        fields = ["name","creator","description","Recc_Floor","Recc_Page","Recc_Rank","show"]
+        fields = [
+            "name",
+            "creator",
+            "description",
+            "Recc_Floor",
+            "Recc_Page",
+            "Recc_Rank",
+            "show",
+        ]
 
 
 # RelDeck Serializer
 class RelDeckSerializer(serializers.ModelSerializer):
     deck_id = serializers.ReadOnlyField()
     card_id = serializers.ReadOnlyField()
+
     class Meta:
         model = RelDeck
-        fields = ['deck_id','card_id','card_count']
+        fields = ["deck_id", "card_id", "card_count"]
 
 
 class CardIDSerializer(serializers.ModelSerializer):
     class Meta:
         model = Card
         fields = ["id", "Name", "ImgPath"]
-
