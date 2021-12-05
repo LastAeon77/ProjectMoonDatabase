@@ -100,6 +100,7 @@ class DeckCreate(APIView):
         if serializer.is_valid():
             deck = serializer.save()  # Created a deck instance
             curr_deck_pk = deck.pk
+            # Starting to create multiple RelDeck instances and saving it for each card
             for ordinary_dict in curr_cards:
                 new_conn = RelDeck(
                     card_id=Card.objects.get(id=ordinary_dict["card_id"]),
