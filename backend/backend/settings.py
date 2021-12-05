@@ -31,7 +31,7 @@ with open("../settings.json", "r") as f:
 # SECURITY WARNING: keep the secret key used in production secret!
 
 SECRET_KEY = data["djangoKey"]
-JWT_SECRET_KEY = "My jwt secret key"
+# JWT_SECRET_KEY = "My jwt secret key"
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
@@ -86,11 +86,15 @@ SIMPLE_JWT = {
     "ACCESS_TOKEN_LIFETIME": timedelta(minutes=60),
     "REFRESH_TOKEN_LIFETIME": timedelta(days=7),
     "ROTATE_REFRESH_TOKENS": True,
-    "BLACKLIST_AFTER_rotation": True,
-    "UPDATE_LAST_LOGIN": True,
-    "USER_ID_FIELD": "userId",
+    "BLACKLIST_AFTER_ROTATION": True,
+    "ALGORITHM": "HS256",
+    "SIGNING_KEY": SECRET_KEY,
+    "VERIFYING_KEY": None,
+    "AUTH_HEADER_TYPES": ("JWT",),
+    "USER_ID_FIELD": "id",
     "USER_ID_CLAIM": "user_id",
-    "SIGNING_KEY": JWT_SECRET_KEY,
+    "AUTH_TOKEN_CLASSES": ("rest_framework_simplejwt.tokens.AccessToken",),
+    "TOKEN_TYPE_CLAIM": "token_type",
 }
 
 
@@ -175,19 +179,13 @@ AUTH_PASSWORD_VALIDATORS = [
     {"NAME": "django.contrib.auth.password_validation.NumericPasswordValidator",},
 ]
 
-AUTH_USER_MODEL = "nextjsdrfauth.CustomUserModel"
-REST_AUTH_SERIALIZERS = {
-    "USER_DETAILS_SERIALIZER": "nextjsdrfauth.serializers.CustomUserModelSerializer"
-}
 
 REST_FRAMEWORK = {
-    "DEFAULT_PERMISSION_CLASSES": (
-        "rest_framework.permissions.IsAuthenticated"
-    ),
+    "DEFAULT_PERMISSION_CLASSES": ("rest_framework.permissions.IsAuthenticated",),
     "DEFAULT_AUTHENTICATION_CLASSES": (
-        'rest_framework.authentication.BasicAuthentication',
-        'rest_framework.authentication.SessionAuthentication',
-        'dj_rest_auth.utils.JWTCookieAuthentication',
+        "rest_framework.authentication.BasicAuthentication",
+        "rest_framework.authentication.SessionAuthentication",
+        "dj_rest_auth.utils.JWTCookieAuthentication",
     ),
 }
 # Internationalization

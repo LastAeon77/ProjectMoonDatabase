@@ -58,7 +58,6 @@ class EffectListView(generics.ListAPIView):
     queryset = Effects.objects.all()
     serializer_class = EffectSerializers
 
-
 class CardListView(generics.ListAPIView):
     permission_classes = (permissions.AllowAny,)
     queryset = Card.objects.all()
@@ -72,7 +71,6 @@ class CardView(generics.RetrieveAPIView):
     lookup_field = "slug"
 
 class CardListView2(generics.ListAPIView):
-    permission_classes = (permissions.AllowAny,)
     queryset = Card.objects.all()
     serializer_class = CardSerializers
 

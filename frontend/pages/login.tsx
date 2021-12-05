@@ -63,12 +63,17 @@ const Login = () => {
                       "JWT " + res.data.access;
                     localStorage.setItem("access_token", res.data.access);
                     localStorage.setItem("refresh_token", res.data.refresh);
+                    if (prevUrl) {
+                      router.push(`/${prevUrl}`);
+                    } else {
+                      router.push("/");
+                    }
                   })
-                  .then((res) =>
-                    console.log(localStorage.getItem("access_token"))
-                  );
+                  // .then((res) =>
+                  //   console.log(localStorage.getItem("access_token"))
+                  // );
                 setTimeout(() => {
-                  alert(JSON.stringify(values, null, 2));
+                  // alert(JSON.stringify(values, null, 2));
                   setSubmitting(false);
                 }, 400);
               }}

@@ -1,4 +1,3 @@
-import { useCookies } from "react-cookie";
 import { useRouter } from "next/router";
 import { useState, useEffect } from "react";
 import { Formik, Form, Field, ErrorMessage } from "formik";
@@ -11,19 +10,10 @@ type errors = {
   username?: string;
   password?: string;
 };
-const Login = () => {
+const Signup = () => {
   const router = useRouter();
   const prevUrl = router.query.prevUrl;
-
-  const [jwt, setJwt] = useState<string | null>();
-  const [cookie, setCookie] = useCookies(["user"]);
-  useEffect(() => {
-    if (localStorage) {
-      const storedJWT = localStorage.getItem("JWT");
-      console.log("LocalState: ", storedJWT);
-      setJwt(storedJWT);
-    }
-  }, []);
+  // const [JWT, setJWT] = useState<string | null>("");
   return (
     <div className="bg-lor bg-fixed overflow-auto bg-contain h-screen">
       <Navbar />
@@ -57,11 +47,31 @@ const Login = () => {
                 if (!values.password) {
                   errors.password = "Required";
                 }
+                else if(values.password.length < 8){
+                  errors.password = "It needs to be at least 8 characters"
+                }
                 return errors;
               }}
               onSubmit={(values, { setSubmitting }) => {
+                localStorage.clear();
+                axios
+                  .post("api/user/create/", {
+                    username: values.username,
+                    email: values.email,
+                    password: values.password,
+                  })
+                  .then((res) => {
+                    localStorage.setItem("access_token", res.data.access);
+                    localStorage.setItem("refresh_token", res.data.refresh);
+                    router.push(`/${prevUrl}`);
+                  })
+                  .catch((errors) => {
+                    console.log(errors.response.data);
+                    alert(JSON.stringify(errors.response.data));
+                  });
+
                 setTimeout(() => {
-                  alert(JSON.stringify(values, null, 2));
+                  // alert(JSON.stringify(values, null, 2));
                   setSubmitting(false);
                 }, 400);
               }}
@@ -129,4 +139,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default Signup;

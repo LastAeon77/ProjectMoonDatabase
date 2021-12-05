@@ -10,6 +10,7 @@ class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
 
         # Add custom claims
         token["fav_color"] = user.fav_color
+        token["username"] = user.username
         return token
 
 
@@ -20,12 +21,14 @@ class NuggetSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Nugget
-        fields = ('email', 'username','password')
-        extra_kwargs = {'password': {'write_only': True}}
+        fields = ("email", "username", "password")
+        extra_kwargs = {"password": {"write_only": True}}
 
     def create(self, validated_data):
-        password = validated_data.pop('password', None)
-        instance = self.Meta.model(**validated_data)  # as long as the fields are the same, we can just use this
+        password = validated_data.pop("password", None)
+        instance = self.Meta.model(
+            **validated_data
+        )  # as long as the fields are the same, we can just use this
         if password is not None:
             instance.set_password(password)
         instance.save()
