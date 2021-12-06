@@ -12,7 +12,7 @@ import Link from "next/link";
 const lor = () => {
   return (
     <div className="bg-lor bg-fixed font-square">
-      <Navbar />
+      {/* <Navbar /> */}
       <div className="flex flex-col items-center">
         <div className="decoration-clone h-screen w-3/4 px-5 text-yellow-300 content-center bg-black bg-opacity-50 font-lor font-extrabold">
           <div className="flex flex-row" style={{ minHeight: 100 }}>
@@ -46,7 +46,7 @@ const lor = () => {
                 sx={{ minWidth: 275, borderRadius: "10%" }}
                 style={{ backgroundColor: "black" }}
               >
-                <Link href="/lor/card" passHref>
+                <Link href="/lor/abno" passHref>
                   <CardActionArea>
                     <CardMedia
                       component="img"
@@ -71,7 +71,7 @@ const lor = () => {
                 sx={{ minWidth: 300, borderRadius: "10%", minHeight: 430 }}
                 style={{ backgroundColor: "black" }}
               >
-                <Link href="/lor/card" passHref>
+                <Link href="/lor/cards" passHref>
                   <CardActionArea>
                     <CardMedia
                       component="img"

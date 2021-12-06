@@ -275,7 +275,7 @@ const Abno = () => {
   }, []);
   return (
     <div className="bg-lor bg-fixed overflow-auto bg-contain h-full">
-      <Navbar />
+      {/* <Navbar /> */}
       <div className="flex flex-col items-center">
         <button
           className="bg-pink-300 hover:bg-blue-300 text-purple font-bold py-2 px-4 rounded"

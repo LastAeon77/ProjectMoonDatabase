@@ -1,11 +1,8 @@
-import { useCookies } from "react-cookie";
 import { useRouter } from "next/router";
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import { Box } from "@mui/system";
 import { Button } from "@mui/material";
-import Navbar from "../components/navbar";
-import { axiosInstance } from "../components/axiosApi";
 import axios from "axios";
 type errors = {
   username?: string;
@@ -14,19 +11,31 @@ type errors = {
 const Login = () => {
   const router = useRouter();
   const prevUrl = router.query.prevUrl;
-
-  const [jwt, setJwt] = useState<string | null>();
-  const [cookie, setCookie] = useCookies(["user"]);
   useEffect(() => {
     if (localStorage) {
-      const storedJWT = localStorage.getItem("JWT");
-      console.log("LocalState: ", storedJWT);
-      setJwt(storedJWT);
+      const refresh = localStorage.getItem("refresh_token");
+      axios
+        .post("/api/token/refresh/", {
+          headers: {
+            "Content-Type": "application/json",
+            accept: "application/json",
+          },
+          "refresh": refresh
+        })
+        .then((res) => {
+          localStorage.setItem("access_token", res.data.access);
+          localStorage.setItem("refresh_token", res.data.refresh);
+          if (prevUrl) {
+            router.push(`/${prevUrl}`);
+          } else {
+            router.push("/");
+          }
+        }).catch((error)=>console.log("Gotta login!"));
     }
   }, []);
   return (
     <div className="bg-lor bg-fixed overflow-auto bg-contain h-screen">
-      <Navbar />
+      {/* <Navbar /> */}
       <div className="flex flex-row items-center justify-center">
         <Box
           sx={{
@@ -59,8 +68,6 @@ const Login = () => {
                     password: values.password,
                   })
                   .then((res) => {
-                    axiosInstance.defaults.headers.common["Authorization"] =
-                      "JWT " + res.data.access;
                     localStorage.setItem("access_token", res.data.access);
                     localStorage.setItem("refresh_token", res.data.refresh);
                     if (prevUrl) {
@@ -68,10 +75,10 @@ const Login = () => {
                     } else {
                       router.push("/");
                     }
-                  })
-                  // .then((res) =>
-                  //   console.log(localStorage.getItem("access_token"))
-                  // );
+                  });
+                // .then((res) =>
+                //   console.log(localStorage.getItem("access_token"))
+                // );
                 setTimeout(() => {
                   // alert(JSON.stringify(values, null, 2));
                   setSubmitting(false);

@@ -111,15 +111,18 @@ class DeckCreate(APIView):
 
 
 class CardNameID(generics.ListAPIView):
+    permission_classes = (permissions.AllowAny,)
     queryset = Card.objects.all()
     serializer_class = CardIDSerializer
 
 
 class PageID(generics.ListAPIView):
+    permission_classes = (permissions.AllowAny,)
     queryset = Page.objects.all()
     serializer_class = PageIDSerializer
 
 
 class OfficeID(generics.ListAPIView):
+    permission_classes = (permissions.AllowAny,)
     queryset = Office.objects.all().filter(Rank=7)
     serializer_class = OfficeIDSerializer

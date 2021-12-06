@@ -3,7 +3,6 @@ from rest_framework import status, permissions
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework_simplejwt.tokens import RefreshToken
-
 from .serializers import MyTokenObtainPairSerializer, NuggetSerializer
 
 
@@ -36,3 +35,9 @@ class LogoutAndBlacklistRefreshTokenForUserView(APIView):
             return Response(status=status.HTTP_205_RESET_CONTENT)
         except Exception as e:
             return Response(status=status.HTTP_400_BAD_REQUEST)
+
+
+class CheckAuth(APIView):
+    def get(self, request, format=None):
+        content = {"status": "request was permitted"}
+        return Response(content)

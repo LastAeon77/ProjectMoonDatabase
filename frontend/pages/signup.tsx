@@ -16,7 +16,7 @@ const Signup = () => {
   // const [JWT, setJWT] = useState<string | null>("");
   return (
     <div className="bg-lor bg-fixed overflow-auto bg-contain h-screen">
-      <Navbar />
+      {/* <Navbar /> */}
       <div className="flex flex-row items-center justify-center">
         <Box
           sx={{

@@ -48,7 +48,7 @@ const Cards = () => {
 
   return (
     <div className="bg-lor bg-fixed overflow-auto bg-contain h-full">
-      <Navbar />
+      {/* <Navbar /> */}
       <div className="flex flex-col items-center">
         <div className="decoration-clone overflow-auto h-screen w-11/12 px-5 text-yellow-100 content-center bg-black bg-opacity-50 font-lor font-extrabold justify-center">
           <div className="flex flex-row justify-center">

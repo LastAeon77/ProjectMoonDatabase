@@ -91,7 +91,7 @@ function Card() {
   }, []);
   return (
     <div className="bg-lor bg-fixed overflow-auto bg-contain h-screen">
-      <Navbar />
+      {/* <Navbar /> */}
       <div className="flex flex-row items-center justify-center">
         <div className="flex flex-col text-white">
           <Box

@@ -74,25 +74,38 @@ const Navbar = () => {
     <>
       <nav className="relative flex flex-wrap items-center justify-between px-2 py-3 bg-black">
         <div className="container px-4 mx-auto flex flex-wrap items-center justify-between">
-          <div className="w-full relative flex justify-between lg:w-auto lg:static lg:block lg:justify-start">
-            <Link href="/lor" passHref>
+          <Link href="/" passHref>
+            <div className="w-full relative flex justify-between lg:w-auto lg:static lg:block lg:justify-start">
               <div className=" text-lg font-bold leading-relaxed inline-block mr-4 py-2 whitespace-nowrap uppercase text-white">
+                Aeonmoon Homepage
+              </div>
+              <button
+                className="text-white cursor-pointer text-xl leading-none px-3 py-1 border border-solid border-transparent rounded bg-transparent block lg:hidden outline-none focus:outline-none"
+                type="button"
+              >
+                <i className="fas fa-bars"></i>
+              </button>
+            </div>
+          </Link>
+          <Link href="/lor" passHref>
+            <div className="w-full relative flex justify-between lg:w-auto lg:static lg:block lg:justify-start">
+              <div className=" text-base font-bold leading-relaxed inline-block mr-4 py-2 whitespace-nowrap uppercase text-yellow-200">
                 Library of Ruina
               </div>
-            </Link>
-            <button
-              className="text-white cursor-pointer text-xl leading-none px-3 py-1 border border-solid border-transparent rounded bg-transparent block lg:hidden outline-none focus:outline-none"
-              type="button"
-            >
-              <i className="fas fa-bars"></i>
-            </button>
-          </div>
+              <button
+                className="text-white cursor-pointer text-xl leading-none px-3 py-1 border border-solid border-transparent rounded bg-transparent block lg:hidden outline-none focus:outline-none"
+                type="button"
+              >
+                <i className="fas fa-bars"></i>
+              </button>
+            </div>
+          </Link>
           <div
             className={"lg:flex flex-grow items-center"}
             id="example-navbar-danger"
           >
             <ul className="flex flex-col lg:flex-row list-none lg:ml-auto">
-              {Username(username,router.pathname)}
+              {Username(username, router.pathname)}
             </ul>
           </div>
         </div>

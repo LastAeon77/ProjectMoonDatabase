@@ -3,6 +3,7 @@ import { useRouter } from "next/router";
 import type { AppProps } from "next/app";
 import { useState, useEffect } from "react";
 import axios from "axios";
+import Navbar from "../components/navbar";
 
 // axios.defaults.baseURL = "http://aeonmoon.herokuapp.com/";
 axios.defaults.baseURL = "http://localhost:8000/";
@@ -26,6 +27,7 @@ function MyApp({ Component, pageProps }: AppProps) {
   } else {
     return (
       <div className="font-lor font-extrabold text-xl">
+        <Navbar />
         <Component {...pageProps} />
       </div>
     );
