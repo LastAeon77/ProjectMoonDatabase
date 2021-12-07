@@ -1,10 +1,10 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
-import { Button } from "@mui/material";
+import { Button, TextField } from "@mui/material";
 import { Box } from "@mui/system";
 import * as Yup from "yup";
-import { Field, Form, Formik, FieldArray, getIn } from "formik";
+import { Field, Form, Formik, FieldArray, getIn, useFormik } from "formik";
 type card_id = {
   id: number;
   Name: string;
@@ -73,7 +73,26 @@ const DeckSchema = Yup.object().shape({
     )
     .required("Must have cards")
     .min(3, "Minimum of 3 different cards")
-    .max(9, "Only 9 cards total"),
+    .max(9, "Only 9 different cards total")
+    .test({
+      name: "cards",
+      message: "Total Must be equal to 9",
+      test: function (value) {
+        if (!value) return false;
+        if (
+          value.reduce((acc, curr) => {
+            if (curr.count) {
+              return acc + curr.count;
+            } else {
+              return acc;
+            }
+          }, 0) === 9
+        ) {
+          return true;
+        }
+        return false;
+      },
+    }),
   effects: Yup.array()
     .of(
       Yup.object().shape({
@@ -151,7 +170,7 @@ const Createdeck = () => {
         <Box
           sx={{
             width: 1800,
-            height: 900,
+            height: 2000,
             backgroundColor: "black",
             opacity: [0.9, 0.9, 0.9],
           }}
@@ -295,7 +314,7 @@ const Createdeck = () => {
                                 <Field
                                   as="select"
                                   name={`effects[${index}].card`}
-                                  style={{ color: "black", width:400}}
+                                  style={{ color: "black", width: 400 }}
                                 >
                                   <option value="" style={{ color: "black" }}>
                                     {" "}
