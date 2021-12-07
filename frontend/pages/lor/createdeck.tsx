@@ -1,6 +1,10 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
+import { Button } from "@mui/material";
+import { Box } from "@mui/system";
+import * as Yup from "yup";
+import { Field, Form, Formik, FieldArray, getIn } from "formik";
 type card_id = {
   id: number;
   Name: string;
@@ -19,15 +23,98 @@ type effect_id = {
   Name: string;
   Description: string;
 };
-const createdeck = () => {
+// within a `FieldArray`'s render
+const GenerateOptionPage = (data: page_id) => {
+  return (
+    <option
+      key={data?.InGameId}
+      value={data?.InGameId}
+      style={{ color: "black" }}
+    >
+      {data?.Name}
+    </option>
+  );
+};
+const GenerateOptionOffice = (data: office_id) => {
+  return (
+    <option value={data?.id} key={data?.id} style={{ color: "black" }}>
+      {data?.Name}
+    </option>
+  );
+};
+const GenerateOptionEffect = (data: effect_id) => {
+  return (
+    <option value={data?.id} key={data?.id} style={{ color: "black" }}>
+      {data?.Name}: {data?.Description}
+    </option>
+  );
+};
+const GenerateOptionCard = (data: card_id) => {
+  return (
+    <option value={data?.id} key={data?.id} style={{ color: "black" }}>
+      {data?.Name}
+    </option>
+  );
+};
+const DeckSchema = Yup.object().shape({
+  Name: Yup.string()
+    .min(2, "Too Short!")
+    .max(50, "Too Long!")
+    .required("Required"),
+  Description: Yup.string().required("Required"),
+  Recc_Floor: Yup.number().required("Required"),
+  Recc_Page: Yup.number().required("Required"),
+  cards: Yup.array()
+    .of(
+      Yup.object().shape({
+        card: Yup.number().required("Required"),
+        count: Yup.number().required("Required").min(1).max(3),
+      })
+    )
+    .required("Must have cards")
+    .min(3, "Minimum of 3 different cards")
+    .max(9, "Only 9 cards total"),
+  effects: Yup.array()
+    .of(
+      Yup.object().shape({
+        eff: Yup.number().required("Required or delete this section"),
+      })
+    )
+    .notRequired(),
+});
+const CardArrayErrors = (errors: any) =>
+  typeof errors.cards === "string" ? (
+    <div style={{ color: "red" }}>{errors.cards}</div>
+  ) : null;
+
+const ErrorMessage = ({ name }: { name: string }) => (
+  <Field
+    name={name}
+    style={{ color: "red" }}
+    render={({ form }: { form: any }) => {
+      const error = getIn(form.errors, name);
+      const touch = getIn(form.touched, name);
+      let temp: Array<string> = [];
+      if (error) {
+        let temp = error.split(" ").slice(1);
+        const new_error = temp.join(" ");
+        return touch && error ? (
+          <div style={{ color: "red" }}>{new_error}</div>
+        ) : null;
+      }
+      return null;
+    }}
+  />
+);
+const Createdeck = () => {
   // Check if user has logged in
   const router = useRouter();
-  const [cards, setcards] = useState<Array<card_id> | null>(null);
-  const [offices, setoffices] = useState<Array<office_id> | null>();
-  const [pages, setpages] = useState<Array<page_id> | null>();
-  const [effects, seteffects] = useState<Array<effect_id> | null>();
+  const [allcards, setcards] = useState<Array<card_id> | null>(null);
+  const [floor, setFloor] = useState<Array<office_id> | null>(null);
+  const [pages, setpages] = useState<Array<page_id> | null>(null);
+  const [alleffects, seteffects] = useState<Array<effect_id> | null>(null);
   useEffect(() => {
-      console.log(localStorage.getItem("access_token"))
+    // console.log(localStorage.getItem("access_token"));
     axios
       .get("api/checkauth", {
         headers: {
@@ -51,7 +138,7 @@ const createdeck = () => {
       .catch((error) => console.log(error));
     axios
       .get("lor/api/officeid")
-      .then((res) => setoffices(res.data as Array<office_id>))
+      .then((res) => setFloor(res.data as Array<office_id>))
       .catch((error) => console.log(error));
     axios
       .get("lor/api/effects")
@@ -60,9 +147,202 @@ const createdeck = () => {
   }, []);
   return (
     <div className="bg-lor bg-fixed overflow-auto bg-contain h-screen">
-      <div className="flex flex-row items-center justify-center"> </div>
+      <div className="flex flex-row items-center justify-center">
+        <Box
+          sx={{
+            width: 1800,
+            height: 900,
+            backgroundColor: "black",
+            opacity: [0.9, 0.9, 0.9],
+          }}
+          style={{
+            boxShadow: `1px -20px 60px -20px purple inset, 0px 0px 5px -1px purple inset`,
+          }}
+        >
+          <div className="flex flex-row items-center justify-center">
+            <Formik
+              initialValues={{
+                Name: "",
+                Description: "",
+                Recc_Floor: "",
+                Recc_Page: "",
+                cards: [],
+                effects: [],
+              }}
+              validationSchema={DeckSchema}
+              onSubmit={(values, { setSubmitting }) => {
+                const temp = values.cards.map((object) =>
+                  JSON.stringify(object)
+                );
+                const new_card = temp.join("|");
+                console.log(new_card);
+                setTimeout(() => {
+                  alert(JSON.stringify(values, null, 2));
+                  setSubmitting(false);
+                }, 400);
+              }}
+            >
+              {({ errors, touched, isSubmitting, values }) => (
+                <Form style={{ width: 400 }}>
+                  <div className="flex flex-col justify-center text-white">
+                    <p> Deck Name : </p>
+                    <Field name="Name" style={{ color: "black" }} />
+                    {errors.Name && touched.Name ? (
+                      <div style={{ color: "red" }}>{errors.Name}</div>
+                    ) : null}
+
+                    <p> Description : </p>
+                    <Field
+                      name="Description"
+                      style={{
+                        height: 200,
+                        width: 400,
+                        color: "black",
+                      }}
+                    />
+                    {errors.Description && touched.Description ? (
+                      <div style={{ color: "red" }}>{errors.Description}</div>
+                    ) : null}
+
+                    <p> Recommended Floor : </p>
+                    <Field
+                      as="select"
+                      name="Recc_Floor"
+                      autoComplete="off"
+                      style={{ color: "black" }}
+                    >
+                      <option value="" style={{ color: "black" }}>
+                        {" "}
+                        Please Select a Floor{" "}
+                      </option>
+                      {floor?.map((object, i) => GenerateOptionOffice(object))}
+                    </Field>
+                    {errors.Recc_Floor && touched.Recc_Floor ? (
+                      <div style={{ color: "red" }}>{errors.Recc_Floor}</div>
+                    ) : null}
+
+                    <p> Recommended Page : </p>
+                    <Field
+                      as="select"
+                      name="Recc_Page"
+                      style={{ color: "black" }}
+                    >
+                      <option value="" style={{ color: "black" }}>
+                        {" "}
+                        Please Select a Page{" "}
+                      </option>
+                      {pages?.map((object, i) => GenerateOptionPage(object))}
+                    </Field>
+                    {errors.Recc_Page && touched.Recc_Page ? (
+                      <div style={{ color: "red" }}>{errors.Recc_Page}</div>
+                    ) : null}
+                    <FieldArray
+                      name="cards"
+                      render={(arrayHelpers) => (
+                        <div>
+                          {values.cards.length > 0 &&
+                            values.cards.map((cards, index) => (
+                              <div key={index}>
+                                <p>Card Name </p>
+                                <Field
+                                  as="select"
+                                  name={`cards[${index}].card`}
+                                  style={{ color: "black" }}
+                                >
+                                  <option value="" style={{ color: "black" }}>
+                                    {" "}
+                                    Please Select a Card{" "}
+                                  </option>
+                                  {allcards?.map((object, i) =>
+                                    GenerateOptionCard(object)
+                                  )}
+                                </Field>
+                                <ErrorMessage name={`cards[${index}].card`} />;
+                                <p>Number of cards </p>
+                                <Field
+                                  style={{ color: "black" }}
+                                  name={`cards[${index}].count`}
+                                />
+                                <ErrorMessage name={`cards[${index}].count`} />;
+                                <Button
+                                  variant="contained"
+                                  type="button"
+                                  onClick={() => arrayHelpers.remove(index)}
+                                >
+                                  Delete
+                                </Button>
+                              </div>
+                            ))}
+                          <Button
+                            variant="contained"
+                            type="button"
+                            onClick={() => arrayHelpers.push({ eff: null })}
+                          >
+                            Add a Card
+                          </Button>
+                        </div>
+                      )}
+                    />
+                    {CardArrayErrors(errors)}
+                    <FieldArray
+                      name="effects"
+                      render={(arrayHelpers) => (
+                        <div>
+                          {values.effects.length > 0 &&
+                            values.effects.map((cards, index) => (
+                              <div key={index}>
+                                <p>Effect: </p>
+                                <Field
+                                  as="select"
+                                  name={`effects[${index}].card`}
+                                  style={{ color: "black", width:400}}
+                                >
+                                  <option value="" style={{ color: "black" }}>
+                                    {" "}
+                                    Please Select an Effect{" "}
+                                  </option>
+                                  {alleffects?.map((object, i) =>
+                                    GenerateOptionEffect(object)
+                                  )}
+                                </Field>
+                                <ErrorMessage name={`effects[${index}].card`} />
+                                <Button
+                                  variant="contained"
+                                  type="button"
+                                  onClick={() => arrayHelpers.remove(index)}
+                                >
+                                  Delete
+                                </Button>
+                              </div>
+                            ))}
+                          <Button
+                            variant="contained"
+                            type="button"
+                            onClick={() =>
+                              arrayHelpers.push({ card: null, count: 0 })
+                            }
+                          >
+                            Add an Effect
+                          </Button>
+                        </div>
+                      )}
+                    />
+                    <Button
+                      variant="contained"
+                      type="submit"
+                      disabled={isSubmitting}
+                    >
+                      Submit
+                    </Button>
+                  </div>
+                </Form>
+              )}
+            </Formik>
+          </div>
+        </Box>
+      </div>
     </div>
   );
 };
 
-export default createdeck;
+export default Createdeck;

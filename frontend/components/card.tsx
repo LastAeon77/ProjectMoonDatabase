@@ -144,12 +144,6 @@ export const Dice_Image = (dicetype: string) => {
 };
 
 export const destroy_NULL = (obj: any) => {
-  // dJango REST returns null property as string NULL. So We clear it here
-  // keys.forEach((key,index) => {
-  //   if (obj[key] === "NULL"){
-  //     obj[key] = null
-  //   }
-  // })
   for (let keys in obj) {
     if (obj[keys] === "NULL") {
       obj[keys] = null as any;

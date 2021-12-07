@@ -88,7 +88,6 @@ class DeckCreate(APIView):
             0
         ]  # Take out cards to individually save it
         serializer = DeckCreatorSerializer(data=new_request)
-        print(curr_effects)
         if serializer.is_valid():
             deck = serializer.save()  # Created a deck instance
             curr_deck_pk = deck.pk
