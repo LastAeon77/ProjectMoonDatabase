@@ -16,19 +16,27 @@ type office_id = {
 };
 type page_id = {
   Name: string;
-  InGameId: number;
+  id: number;
 };
 type effect_id = {
   id: number;
   Name: string;
   Description: string;
 };
+type rank_id = {
+  id: number;
+  Name: string;
+  Slogan: string;
+  Description: string;
+  ImgPath: string;
+  slug: string;
+};
 // within a `FieldArray`'s render
 const GenerateOptionPage = (data: page_id) => {
   return (
     <option
-      key={data?.InGameId}
-      value={data?.InGameId}
+      key={data?.id}
+      value={data?.id}
       style={{ color: "black" }}
     >
       {data?.Name}
@@ -38,6 +46,13 @@ const GenerateOptionPage = (data: page_id) => {
 const GenerateOptionOffice = (data: office_id) => {
   return (
     <option value={data?.id} key={data?.id} style={{ color: "black" }}>
+      {data?.Name}
+    </option>
+  );
+};
+const GenerateOptionRank = (data: rank_id) => {
+  return (
+    <option value={data?.id} key={data?.Name} style={{ color: "black" }}>
       {data?.Name}
     </option>
   );
@@ -64,6 +79,7 @@ const DeckSchema = Yup.object().shape({
   Description: Yup.string().required("Required"),
   Recc_Floor: Yup.number().required("Required"),
   Recc_Page: Yup.number().required("Required"),
+  Recc_Rank: Yup.number().required("Required"),
   cards: Yup.array()
     .of(
       Yup.object().shape({
@@ -93,13 +109,11 @@ const DeckSchema = Yup.object().shape({
         return false;
       },
     }),
-  effects: Yup.array()
-    .of(
-      Yup.object().shape({
-        eff: Yup.number().required("Required or delete this section"),
-      })
-    )
-    .notRequired(),
+  effects: Yup.array().of(
+    Yup.object().shape({
+      eff: Yup.number().required("Required or delete this section"),
+    })
+  ),
 });
 const CardArrayErrors = (errors: any) =>
   typeof errors.cards === "string" ? (
@@ -132,6 +146,7 @@ const Createdeck = () => {
   const [floor, setFloor] = useState<Array<office_id> | null>(null);
   const [pages, setpages] = useState<Array<page_id> | null>(null);
   const [alleffects, seteffects] = useState<Array<effect_id> | null>(null);
+  const [rank, setrank] = useState<Array<rank_id> | null>();
   useEffect(() => {
     // console.log(localStorage.getItem("access_token"));
     axios
@@ -163,9 +178,13 @@ const Createdeck = () => {
       .get("lor/api/effects")
       .then((res) => seteffects(res.data as Array<effect_id>))
       .catch((error) => console.log(error));
+    axios
+      .get("lor/api/rank")
+      .then((res) => setrank(res.data as Array<rank_id>))
+      .catch((error) => console.log(error));
   }, []);
   return (
-    <div className="bg-lor bg-fixed overflow-auto bg-contain h-screen">
+    <div className="bg-lor bg-fixed overflow-auto bg-contain h-auto text-2xl">
       <div className="flex flex-row items-center justify-center">
         <Box
           sx={{
@@ -185,6 +204,7 @@ const Createdeck = () => {
                 Description: "",
                 Recc_Floor: "",
                 Recc_Page: "",
+                Recc_Rank: "",
                 cards: [],
                 effects: [],
               }}
@@ -194,15 +214,42 @@ const Createdeck = () => {
                   JSON.stringify(object)
                 );
                 const new_card = temp.join("|");
-                console.log(new_card);
+                axios
+                  .post(
+                    "/lor/api/deckcreate/",
+                    {
+                      name: values.Name,
+                      description: values.Description,
+                      cards: new_card,
+                      show: true,
+                      Recc_Floor: parseInt(values.Recc_Floor),
+                      Recc_Page: parseInt(values.Recc_Page),
+                      Recc_Rank: parseInt(values.Recc_Rank),
+                      effect: values.effects.map((object, i) =>
+                        parseInt(object["eff"])
+                      ),
+                    },
+                    {
+                      headers: {
+                        Authorization: `JWT ${localStorage.getItem(
+                          "access_token"
+                        )}`,
+                        "Content-Type": "application/json",
+                        accept: "application/json",
+                      },
+                    }
+                  )
+                  .then((res) => console.log(res.data))
+                  .catch((error) =>
+                    alert("The deck name probably already exists")
+                  );
                 setTimeout(() => {
-                  alert(JSON.stringify(values, null, 2));
                   setSubmitting(false);
                 }, 400);
               }}
             >
               {({ errors, touched, isSubmitting, values }) => (
-                <Form style={{ width: 400 }}>
+                <Form style={{ width: 600 }}>
                   <div className="flex flex-col justify-center text-white">
                     <p> Deck Name : </p>
                     <Field name="Name" style={{ color: "black" }} />
@@ -215,7 +262,6 @@ const Createdeck = () => {
                       name="Description"
                       style={{
                         height: 200,
-                        width: 400,
                         color: "black",
                       }}
                     />
@@ -244,6 +290,7 @@ const Createdeck = () => {
                     <Field
                       as="select"
                       name="Recc_Page"
+                      autoComplete="off"
                       style={{ color: "black" }}
                     >
                       <option value="" style={{ color: "black" }}>
@@ -254,6 +301,23 @@ const Createdeck = () => {
                     </Field>
                     {errors.Recc_Page && touched.Recc_Page ? (
                       <div style={{ color: "red" }}>{errors.Recc_Page}</div>
+                    ) : null}
+
+                    <p> Recommended Rank : </p>
+                    <Field
+                      as="select"
+                      name="Recc_Rank"
+                      autoComplete="off"
+                      style={{ color: "black" }}
+                    >
+                      <option value="" style={{ color: "black" }}>
+                        {" "}
+                        Please Select a Rank{" "}
+                      </option>
+                      {rank?.map((object, i) => GenerateOptionRank(object))}
+                    </Field>
+                    {errors.Recc_Rank && touched.Recc_Rank ? (
+                      <div style={{ color: "red" }}>{errors.Recc_Rank}</div>
                     ) : null}
                     <FieldArray
                       name="cards"
@@ -276,13 +340,13 @@ const Createdeck = () => {
                                     GenerateOptionCard(object)
                                   )}
                                 </Field>
-                                <ErrorMessage name={`cards[${index}].card`} />;
+                                <ErrorMessage name={`cards[${index}].card`} />
                                 <p>Number of cards </p>
                                 <Field
                                   style={{ color: "black" }}
                                   name={`cards[${index}].count`}
                                 />
-                                <ErrorMessage name={`cards[${index}].count`} />;
+                                <ErrorMessage name={`cards[${index}].count`} />
                                 <Button
                                   variant="contained"
                                   type="button"
@@ -295,7 +359,9 @@ const Createdeck = () => {
                           <Button
                             variant="contained"
                             type="button"
-                            onClick={() => arrayHelpers.push({ eff: null })}
+                            onClick={() =>
+                              arrayHelpers.push({ card: null, count: 1 })
+                            }
                           >
                             Add a Card
                           </Button>
@@ -313,7 +379,7 @@ const Createdeck = () => {
                                 <p>Effect: </p>
                                 <Field
                                   as="select"
-                                  name={`effects[${index}].card`}
+                                  name={`effects[${index}].eff`}
                                   style={{ color: "black", width: 400 }}
                                 >
                                   <option value="" style={{ color: "black" }}>
@@ -324,7 +390,7 @@ const Createdeck = () => {
                                     GenerateOptionEffect(object)
                                   )}
                                 </Field>
-                                <ErrorMessage name={`effects[${index}].card`} />
+                                <ErrorMessage name={`effects[${index}].eff`} />
                                 <Button
                                   variant="contained"
                                   type="button"
@@ -337,9 +403,7 @@ const Createdeck = () => {
                           <Button
                             variant="contained"
                             type="button"
-                            onClick={() =>
-                              arrayHelpers.push({ card: null, count: 0 })
-                            }
+                            onClick={() => arrayHelpers.push({ eff: null })}
                           >
                             Add an Effect
                           </Button>

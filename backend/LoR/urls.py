@@ -7,8 +7,10 @@ app_name = "lor"
 # these are the url patterns for each page of the website
 urlpatterns = [
     path("api/deck/<int:pk>", views.deckSerail.as_view(), name="DeckAPIView"),
+    path("api/deck", views.deckSerailAll.as_view(), name="DeckFullAPIView"),
     path("api/card/", views.CardListView.as_view(), name="CardAPIView"),
     path("api/abno/", views.AbnoViewSet.as_view(), name="AbnoAPIView"),
+    path("api/rank", views.rankSerial.as_view(), name="Rank"),
     path("api/effects", views.EffectListView.as_view(), name="Effects"),
     path("api/cardid", views.CardNameID.as_view(), name="CardIDList"),
     path("api/officeid", views.OfficeID.as_view(), name="OfficeIDList"),

@@ -127,7 +127,7 @@ class EffectSerializers(serializers.ModelSerializer):
 class PageIDSerializer(serializers.ModelSerializer):
     class Meta:
         model = Page
-        fields = ["Name", "InGameId"]
+        fields = ["Name", "id"]
 
 
 class OfficeIDSerializer(serializers.ModelSerializer):

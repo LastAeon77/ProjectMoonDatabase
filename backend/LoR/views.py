@@ -13,7 +13,7 @@ from .models import (
     Effects,
 )
 from rest_framework.response import Response
-from rest_framework import generics
+from rest_framework import generics, serializers
 from .serializers import (
     DeckSerializers,
     CardSerializers,
@@ -32,13 +32,19 @@ from rest_framework import status, permissions
 # ListView will fetch all rows of a Relation
 
 
-class rankSerial(generics.RetrieveAPIView):
+class rankSerial(generics.ListAPIView):
     permission_classes = (permissions.AllowAny,)
     queryset = Rank.objects.all()
     serializer_class = RankSerializers
 
 
 class deckSerail(generics.RetrieveAPIView):
+    permission_classes = (permissions.AllowAny,)
+    queryset = Deck.objects.all()
+    serializer_class = DeckSerializers
+
+
+class deckSerailAll(generics.ListAPIView):
     permission_classes = (permissions.AllowAny,)
     queryset = Deck.objects.all()
     serializer_class = DeckSerializers
@@ -77,16 +83,14 @@ class CardListView2(generics.ListAPIView):
 class DeckCreate(APIView):
     def post(self, request, format="json"):
         new_request = request.data.copy()
-        new_request["effect"] = list(map(int, new_request["effect"].split(",")))
+        # new_request["effect"] = list(map(int, new_request["effect"].split(",")))
         new_request["cards"] = list(map(str, new_request["cards"].split("|")))
         new_request["cards"] = list(map(json.loads, new_request["cards"]))
         new_request["creator"] = request.user.id
-        curr_effects = new_request.pop("effect")[
-            0
-        ]  # Take out effect to individually save it
-        curr_cards = new_request.pop("cards")[
-            0
-        ]  # Take out cards to individually save it
+        curr_effects = new_request.pop(
+            "effect"
+        )  # Take out effect to individually save it
+        curr_cards = new_request.pop("cards")  # Take out cards to individually save it
         serializer = DeckCreatorSerializer(data=new_request)
         if serializer.is_valid():
             deck = serializer.save()  # Created a deck instance
@@ -94,9 +98,9 @@ class DeckCreate(APIView):
             # Starting to create multiple RelDeck instances and saving it for each card
             for ordinary_dict in curr_cards:
                 new_conn = RelDeck(
-                    card_id=Card.objects.get(id=ordinary_dict["card_id"]),
-                    deck_id=Deck.objects.get(id=curr_deck_pk),
-                    card_count=ordinary_dict["card_count"],
+                    card_id=Card.objects.get(id=int(ordinary_dict["card"])),
+                    deck_id=Deck.objects.get(id=int(curr_deck_pk)),
+                    card_count=ordinary_dict["count"],
                 )
                 if new_conn:
                     new_conn.save()
@@ -106,7 +110,9 @@ class DeckCreate(APIView):
             if deck:
                 js = serializer.data
                 return Response(js, status=status.HTTP_201_CREATED)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        else:
+            print(serializer.errors)
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
 class CardNameID(generics.ListAPIView):
