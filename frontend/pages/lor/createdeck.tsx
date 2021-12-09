@@ -5,40 +5,44 @@ import { Button, TextField } from "@mui/material";
 import { Box } from "@mui/system";
 import * as Yup from "yup";
 import { Field, Form, Formik, FieldArray, getIn, useFormik } from "formik";
-type card_id = {
-  id: number;
-  Name: string;
-  ImgPath: string;
-};
-type office_id = {
-  id: number;
-  Name: string;
-};
-type page_id = {
-  Name: string;
-  id: number;
-};
-type effect_id = {
-  id: number;
-  Name: string;
-  Description: string;
-};
-type rank_id = {
-  id: number;
-  Name: string;
-  Slogan: string;
-  Description: string;
-  ImgPath: string;
-  slug: string;
-};
+import {
+  rank_id,
+  card_id,
+  office_id,
+  effect_id,
+  page_id,
+} from "../../components/types";
+
+// type card_id = {
+//   id: number;
+//   Name: string;
+//   ImgPath: string;
+// };
+// type office_id = {
+//   id: number;
+//   Name: string;
+// };
+// type page_id = {
+//   Name: string;
+//   id: number;
+// };
+// type effect_id = {
+//   id: number;
+//   Name: string;
+//   Description: string;
+// };
+// type rank_id = {
+//   id: number;
+//   Name: string;
+//   Slogan: string;
+//   Description: string;
+//   ImgPath: string;
+//   slug: string;
+// };
 // within a `FieldArray`'s render
 const GenerateOptionPage = (data: page_id) => {
   return (
-    <option
-      key={data?.id}
-      value={data?.id}
-      style={{ color: "black" }}
-    >
+    <option key={data?.id} value={data?.id} style={{ color: "black" }}>
       {data?.Name}
     </option>
   );
