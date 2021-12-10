@@ -21,7 +21,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.2/howto/deployment/checklist/
 #################
-# Take data from json
+# Take data from json (For development)
 import json
 
 with open("../settings.json", "r") as f:
@@ -221,3 +221,8 @@ MEDIA_URL = "/media/"
 STATIC_URL = "/static/"
 STATIC_ROOT = BASE_DIR / "staticfiles"
 STATICFILES_DIRS = (os.path.join(BASE_DIR, "static"),)
+
+
+# Configure Django App for Heroku.
+import django_heroku
+django_heroku.settings(locals())
