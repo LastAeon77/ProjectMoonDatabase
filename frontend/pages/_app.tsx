@@ -23,7 +23,10 @@ function MyApp({ Component, pageProps }: AppProps) {
     router.events.on("routeChangeError", handleComplete);
   }, [router]);
   if (pageLoading) {
-    return <div>Loading</div>;
+    return (
+      <div className="bg-loading bg-fixed overflow-auto w-screen h-screen">
+      </div>
+    );
   } else {
     return (
       <div className="font-lor font-extrabold text-xl">

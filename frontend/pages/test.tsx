@@ -1,5 +1,5 @@
 import { One_Card, game_card } from "../components/card";
-import cards from "./lor/cards/[cards]";
+import cards from "../components/cards/[cards]";
 import Navbar from "../components/navbar";
 const demo_data: game_card = {
   office: "Streetlight Office",

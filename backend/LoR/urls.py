@@ -10,6 +10,7 @@ urlpatterns = [
     path("api/deck", views.deckSerailAll.as_view(), name="DeckFullAPIView"),
     path("api/card/", views.CardListView.as_view(), name="CardAPIView"),
     path("api/abno/", views.AbnoViewSet.as_view(), name="AbnoAPIView"),
+    path("api/abno/<int:pk>", views.AbnoViewOne.as_view(), name="AbnoAPISingle"),
     path("api/rank", views.rankSerial.as_view(), name="Rank"),
     path("api/effects", views.EffectListView.as_view(), name="Effects"),
     path("api/cardid", views.CardNameID.as_view(), name="CardIDList"),

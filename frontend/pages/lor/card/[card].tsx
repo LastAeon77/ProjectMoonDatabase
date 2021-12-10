@@ -3,7 +3,6 @@ import { useRouter } from "next/router";
 import { useState } from "react";
 import axios from "axios";
 import { game_card } from "../../../components/card";
-import Navbar from "../../../components/navbar";
 import { Box } from "@mui/system";
 import { imgur_or_static } from "../../../components/misc";
 import {
@@ -21,13 +20,23 @@ const OneCardDisplay = (data: string | undefined, w: number, h: number) => {
     />
   );
 };
+const check_null =(word:string|null|undefined) =>{
+  if(word){
+    return word.replaceAll(";", "\n")
+  }
+  else{
+    return ""
+  }
 
+}
 const card_content = (data2: game_card) => {
   const data = destroy_NULL(data2);
   return (
     <div className="flex flex-col m-8">
       <div className="text-2xl ml-2">Cost: {data?.Cost}</div>
-      <div className="p-2 mt-5">{data?.On_Play_Effect}</div>
+      <div className="p-2 mt-5" style={{ whiteSpace: "pre-line" }}>
+        {check_null(data?.On_Play_Effect)}
+      </div>
       <div className="flex flex-row ">
         <div style={{ width: 50, height: 50 }}>
           {data.Type1 && Dice_Image(data.Type1)}

@@ -1,4 +1,5 @@
 import json
+
 from .models import (
     Office,
     Rank,
@@ -6,14 +7,14 @@ from .models import (
     Deck,
     RelDeck,
     Page,
-    Character,
-    Guide,
-    RelGuide,
+    # Character,
+    # Guide,
+    # RelGuide,
     AbnoCards,
     Effects,
 )
 from rest_framework.response import Response
-from rest_framework import generics, serializers
+from rest_framework import generics
 from .serializers import (
     DeckSerializers,
     CardSerializers,
@@ -24,6 +25,7 @@ from .serializers import (
     CardIDSerializer,
     PageIDSerializer,
     OfficeIDSerializer,
+    CardEfficientSerializers,
 )
 from rest_framework.views import APIView
 from rest_framework import status, permissions
@@ -51,6 +53,12 @@ class deckSerailAll(generics.ListAPIView):
 
 
 class AbnoViewSet(generics.ListAPIView):
+    permission_classes = (permissions.AllowAny,)
+    queryset = AbnoCards.objects.all()
+    serializer_class = AbnoSerializers
+
+
+class AbnoViewOne(generics.RetrieveAPIView):
     permission_classes = (permissions.AllowAny,)
     queryset = AbnoCards.objects.all()
     serializer_class = AbnoSerializers
@@ -127,7 +135,19 @@ class PageID(generics.ListAPIView):
     serializer_class = PageIDSerializer
 
 
-class OfficeID(generics.ListAPIView):
+class OfficeFloor(generics.ListAPIView):
     permission_classes = (permissions.AllowAny,)
     queryset = Office.objects.all().filter(Rank=7)
     serializer_class = OfficeIDSerializer
+
+
+class OfficeAll(generics.ListAPIView):
+    permission_classes = (permissions.AllowAny,)
+    queryset = Office.objects.all()
+    serializer_class = OfficeIDSerializer
+
+
+class CardLightListView(generics.ListAPIView):
+    permission_classes = (permissions.AllowAny,)
+    queryset = Card.objects.all()
+    serializer_class = CardEfficientSerializers

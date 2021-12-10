@@ -133,7 +133,7 @@ class PageIDSerializer(serializers.ModelSerializer):
 class OfficeIDSerializer(serializers.ModelSerializer):
     class Meta:
         model = Office
-        fields = ["id", "Name"]
+        fields = ["id", "Name", "Rank"]
 
 
 class DeckCreatorSerializer(serializers.ModelSerializer):

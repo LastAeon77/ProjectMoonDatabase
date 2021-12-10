@@ -2,7 +2,8 @@ import React from "react";
 import { useState } from "react";
 import axios from "axios";
 import Navbar from "../../components/navbar";
-import { one_abno, abno_card } from "../../components/abnormality";
+import { one_abno } from "../../components/abnormality";
+import { abno_card } from "../../components/types";
 
 type floor = {
   history: Array<abno_card> | undefined;
@@ -30,7 +31,7 @@ type floorhidden = {
 };
 
 const render_cards = (
-  data: Array<abno_card>|undefined,
+  data: Array<abno_card> | undefined,
   floor_name: string,
   hidden: boolean
 ) => {
@@ -274,8 +275,7 @@ const Abno = () => {
       .catch((error) => console.log(error));
   }, []);
   return (
-    <div className="bg-lor bg-fixed overflow-auto bg-contain h-full">
-      {/* <Navbar /> */}
+    <div className="bg-lor bg-fixed overflow-auto bg-contain h-screen">
       <div className="flex flex-col items-center">
         <button
           className="bg-pink-300 hover:bg-blue-300 text-purple font-bold py-2 px-4 rounded"
