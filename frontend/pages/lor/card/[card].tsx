@@ -20,15 +20,13 @@ const OneCardDisplay = (data: string | undefined, w: number, h: number) => {
     />
   );
 };
-const check_null =(word:string|null|undefined) =>{
-  if(word){
-    return word.replaceAll(";", "\n")
+const check_null = (word: string | null | undefined) => {
+  if (word) {
+    return word.replaceAll(";", "\n");
+  } else {
+    return "";
   }
-  else{
-    return ""
-  }
-
-}
+};
 const card_content = (data2: game_card) => {
   const data = destroy_NULL(data2);
   return (
@@ -100,13 +98,12 @@ function Card() {
   }, []);
   return (
     <div className="bg-lor bg-fixed overflow-auto bg-contain h-screen">
-      {/* <Navbar /> */}
       <div className="flex flex-row items-center justify-center">
         <div className="flex flex-col text-white">
           <Box
             sx={{
-              width: 1800,
-              height: 900,
+              width: 1200,
+              height: "screen",
               backgroundColor: "black",
               opacity: [0.9, 0.9, 0.9],
             }}
@@ -116,19 +113,17 @@ function Card() {
               } inset, 0px 0px 5px -1px #883C82 inset`,
             }}
           >
-            <div className="flex flex-col">
+            <div className="flex flex-col items-center">
               <div className="text-5xl m-8">{data?.Name}</div>
-              <div className={`text-2xl ml-8`}>{data?.Rarity}</div>
-              <div className="flex flex-row m-7">
+              <div className="text-2xl ml-8">{data?.Rarity}</div>
+              <div className="flex flex-row ml-3 mr-3">
                 <div>{OneCardDisplay(data?.ImgPath, 600, 400)}</div>
                 <div>{data && card_content(data)}</div>
-
-                <div className="ml-20">
-                  {OneCardDisplay(data?.office_picture, 300, 200)}
+                <div className="flex flex-col items-center">
+                  <div>{OneCardDisplay(data?.office_picture, 300, 200)}</div>
+                  <div>{OneCardDisplay(data?.rank_picture, 100, 100)}</div>
+                  <div>{data?.rank}</div>
                 </div>
-              </div>
-              <div className="ml-20">
-                {OneCardDisplay(data?.rank_picture, 100, 100)} {data?.rank}
               </div>
             </div>
           </Box>

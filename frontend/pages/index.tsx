@@ -16,10 +16,10 @@ const Home: NextPage = () => {
             />
           </Link>
           <div
-            className="transform items-center justify-center w-1/2 bg-limbuslogo hover:transition duration-500 hover:scale-125"
+            className="transform mr-20 items-center justify-center w-1/2 bg-limbuslogo hover:transition duration-500 hover:scale-125"
             style={{
-              height: 659,
-              width: 669,
+              height: 487,
+              width: 502,
             }}
           ></div>
         </div>

@@ -1,8 +1,6 @@
 import React from "react";
 import axios from "axios";
-import Card from "@mui/material/Card";
-import CardMedia from "@mui/material/CardMedia";
-import CardActions from "@mui/material/CardActions";
+import { Box } from "@mui/system";
 import { imgur_or_static } from "./misc";
 import Link from "next/link";
 import Image from "next/dist/client/image";
@@ -39,14 +37,15 @@ export type game_card = {
 
 export const Dice_Image = (dicetype: string) => {
   // This assigns dice images to each name
+  const size = 40;
   switch (dicetype) {
     case "Blunt":
       return (
         <Image
           src="/static/dice_type/AtkBlunt.png"
           alt="Blunt"
-          height={50}
-          width={50}
+          height={size}
+          width={size}
         />
       );
     case "Thurst":
@@ -54,8 +53,8 @@ export const Dice_Image = (dicetype: string) => {
         <Image
           src="/static/dice_type/AtkPierce.png"
           alt="Thrust"
-          height={50}
-          width={50}
+          height={size}
+          width={size}
         />
       );
     case "Pierce":
@@ -63,8 +62,8 @@ export const Dice_Image = (dicetype: string) => {
         <Image
           src="/static/dice_type/AtkPierce.png"
           alt="Thrust"
-          height={50}
-          width={50}
+          height={size}
+          width={size}
         />
       );
     case "Slash":
@@ -72,8 +71,8 @@ export const Dice_Image = (dicetype: string) => {
         <Image
           src="/static/dice_type/AtkSlash.png"
           alt="Slash"
-          height={50}
-          width={50}
+          height={size}
+          width={size}
         />
       );
     case "Evade":
@@ -81,8 +80,8 @@ export const Dice_Image = (dicetype: string) => {
         <Image
           src="/static/dice_type/DefEvade.png"
           alt="Evade"
-          height={50}
-          width={50}
+          height={size}
+          width={size}
         />
       );
     case "Block":
@@ -90,8 +89,8 @@ export const Dice_Image = (dicetype: string) => {
         <Image
           src="/static/dice_type/DefGuard.png"
           alt="Block"
-          height={50}
-          width={50}
+          height={size}
+          width={size}
         />
       );
     case "Blunt Counter":
@@ -99,8 +98,8 @@ export const Dice_Image = (dicetype: string) => {
         <Image
           src="/static/dice_type/StandbyBlunt.png"
           alt="Blunt Counter"
-          height={50}
-          width={50}
+          height={size}
+          width={size}
         />
       );
     case "Pierce Counter":
@@ -108,8 +107,8 @@ export const Dice_Image = (dicetype: string) => {
         <Image
           src="/static/dice_type/StandbyPierce.png"
           alt="Thrust Counter"
-          height={50}
-          width={50}
+          height={size}
+          width={size}
         />
       );
     case "Slash Counter":
@@ -117,8 +116,8 @@ export const Dice_Image = (dicetype: string) => {
         <Image
           src="/static/dice_type/StandbySlash.png"
           alt="Slash Counter"
-          height={50}
-          width={50}
+          height={size}
+          width={size}
         />
       );
     case "Evade Counter":
@@ -126,8 +125,8 @@ export const Dice_Image = (dicetype: string) => {
         <Image
           src="/static/dice_type/StandbyEvade.png"
           alt="Evade Counter"
-          height={50}
-          width={50}
+          height={size}
+          width={size}
         />
       );
     case "Block Counter":
@@ -135,8 +134,8 @@ export const Dice_Image = (dicetype: string) => {
         <Image
           src="/static/dice_type/StandbyGuard.png"
           alt="Block Counter"
-          height={50}
-          width={50}
+          height={size}
+          width={size}
         />
       );
     default:
@@ -174,15 +173,13 @@ export const One_Card = (data2: game_card | game_card_light) => {
   return (
     <Link href={`/lor/card/${data?.slug}`} passHref key={data?.id}>
       <div className="text-yellow-100">
-        <Card
+        <Box
           sx={{
-            maxWidth: 590,
-            minWidth: 590,
-            maxHeight: 300,
-            minHeight: 300,
             borderRadius: "1em",
           }}
           style={{
+            width: 400,
+            height: 230,
             backgroundColor: "black",
             margin: "6px",
             boxShadow: `1px -20px 60px -20px ${color_assign(
@@ -190,177 +187,64 @@ export const One_Card = (data2: game_card | game_card_light) => {
             )} inset, 0px 0px 5px -1px ${color_assign(data.Rarity)} inset`,
           }}
         >
-          <CardActions>
-            <div className="flex flex-col items-center">
-              <div className="text-white text-2xl">{data?.Name}</div>
-              <div className="flex flex-row items-left text-yellow-100">
-                <div className="flex flex-col items-center">
-                  <div className="flex-1">
-                    <CardMedia
-                      component="img"
-                      height="400"
-                      alt={data.Name}
-                      image={String(
-                        data.ImgPath && imgur_or_static(data.ImgPath)
-                      )}
-                    />
-                  </div>
-                  <div className="flex-1 text-4xl">{data?.Cost}</div>
+          <div className="flex flex-col content-center">
+            <div className="text-white ml-4 text-xl">{data?.Name}</div>
+            <div className="flex flex-row items-left text-yellow-100">
+              <div className="flex flex-col items-center">
+                <div className="ml-4" style={{ width: 150 }}>
+                  <img
+                    width={150}
+                    src={String(data.ImgPath && imgur_or_static(data.ImgPath))}
+                  />
                 </div>
-                <div className="flex-1">
-                  <div className="flex flex-col">
-                    <div className="p-2 flex-wrap">
-                      {data.On_Play_Effect && data.On_Play_Effect}
+                <div className="flex-1 text-3xl">{data?.Cost}</div>
+              </div>
+              <div>
+                <div className="flex flex-col flex-wrap text-sm">
+                  <div>{data.On_Play_Effect && data.On_Play_Effect}</div>
+                  <div className="flex flex-row">
+                    <div className="text-sm">
+                      {data.Type1 && Dice_Image(data.Type1)}
                     </div>
-                    <div className="flex flex-row">
-                      <div style={{ width: 50, height: 50 }}>
-                        {data.Type1 && Dice_Image(data.Type1)}
-                      </div>
-                      <div className="p-2" style={{ width: 60, height: 50 }}>
-                        {data.Roll1 && data.Roll1}
-                      </div>
-                      <div style={{ width: 300 }} className="flex-wrap">
-                        {data.Eff1 && data.Eff1}
-                      </div>
+                    <div className="mr-2">{data.Roll1 && data.Roll1}</div>
+                    <div>{data.Eff1 && data.Eff1}</div>
+                  </div>
+                  <div className="flex flex-row">
+                    <div>{data.Type2 && Dice_Image(data.Type2)}</div>
+                    <div className="mr-2">{data.Roll2 && data.Roll2}</div>
+                    <div className="flex-wrap">{data.Eff2 && data.Eff2}</div>
+                  </div>
+                  <div className="flex flex flex-row">
+                    <div>{data.Type3 && Dice_Image(data.Type3)}</div>
+                    <div className="mr-2">{data.Roll3 && data.Roll3}</div>
+                    <div className="flex flex-wrap">
+                      {data.Eff3 && data.Eff3}
                     </div>
-                    <div className="flex flex-row">
-                      <div style={{ width: 50, height: 50 }}>
-                        {data.Type2 && Dice_Image(data.Type2)}
-                      </div>
-                      <div className="p-2" style={{ width: 60, height: 50 }}>
-                        {data.Roll2 && data.Roll2}
-                      </div>
-                      <div>{data.Eff2 && data.Eff2}</div>
+                  </div>
+                  <div className="flex flex-row">
+                    <div style={{ width: 50, height: 50 }}>
+                      {data.Type4 && Dice_Image(data.Type4)}
                     </div>
-                    <div className="flex flex-row">
-                      <div style={{ width: 50, height: 50 }}>
-                        {data.Type3 && Dice_Image(data.Type3)}
-                      </div>
-                      <div className="p-2" style={{ width: 60, height: 50 }}>
-                        {data.Roll3 && data.Roll3}
-                      </div>
-                      <div>{data.Eff3 && data.Eff3}</div>
+                    <div className="mr-2">{data.Roll4 && data.Roll4}</div>
+                    <div className="flex flex-wrap">
+                      {data.Eff4 && data.Eff4}
                     </div>
-                    <div className="flex flex-row">
-                      <div style={{ width: 50, height: 50 }}>
-                        {data.Type4 && Dice_Image(data.Type4)}
-                      </div>
-                      <div className="p-2" style={{ width: 60, height: 50 }}>
-                        {data.Roll4 && data.Roll4}
-                      </div>
-                      <div>{data.Eff4 && data.Eff4}</div>
+                  </div>
+                  <div className="flex flex-row">
+                    <div style={{ width: 50, height: 50 }}>
+                      {data.Type5 && Dice_Image(data.Type5)}
                     </div>
-                    <div className="flex flex-row">
-                      <div style={{ width: 50, height: 50 }}>
-                        {data.Type5 && Dice_Image(data.Type5)}
-                      </div>
-                      <div className="p-2" style={{ width: 60, height: 50 }}>
-                        {data.Roll5 && data.Roll5}
-                      </div>
-                      <div>{data.Eff5 && data.Eff5}</div>
+                    <div className="mr-2">{data.Roll5 && data.Roll5}</div>
+                    <div className="flex flex-wrap">
+                      {data.Eff5 && data.Eff5}
                     </div>
                   </div>
                 </div>
               </div>
             </div>
-          </CardActions>
-        </Card>
+          </div>
+        </Box>
       </div>
     </Link>
   );
 };
-// const One_Card_old = (data2: game_card) => {
-//     // Generate the Card Element
-//     const data = destroy_NULL(data2);
-//     return (
-//       <div className="text-yellow-100">
-//         <Card
-//           sx={{
-//             maxWidth: 600,
-//             minWidth: 600,
-//             maxHeight: 300,
-//             minHeight: 300,
-//             borderRadius: "10%",
-//           }}
-//           style={{
-//             backgroundColor: "black",
-//             border: `5px solid ${color_assign(data.Rarity)}`,
-//             margin: "6px",
-//           }}
-//         >
-//           <CardActions>
-//             <div className="flex flex-col items-center">
-//               <div className="text-white text-2xl">{data?.Name}</div>
-//               <div className="flex flex-row items-left text-yellow-100">
-//                 <div className="flex flex-col items-center">
-//                   <div className="flex-1">
-//                     <CardMedia
-//                       component="img"
-//                       height="400"
-//                       alt={data.Name}
-//                       image={String(
-//                         data.ImgPath && imgur_or_static(data.ImgPath)
-//                       )}
-//                     />
-//                   </div>
-//                   <div className="flex-1 text-4xl">{data?.Cost}</div>
-//                 </div>
-//                 <div className="flex-1">
-//                   <div className="flex flex-col">
-//                     <div className="p-2">
-//                       {data.On_Play_Effect && data.On_Play_Effect}
-//                     </div>
-//                     <div className="flex flex-row">
-//                       <div style={{ width: 50, height: 50 }}>
-//                         {data.Type1 && Dice_Image(data.Type1)}
-//                       </div>
-//                       <div className="p-2" style={{ width: 60, height: 50 }}>
-//                         {data.Roll1 && data.Roll1}
-//                       </div>
-//                       <div style={{ width: 300 }}>{data.Eff1 && data.Eff1}</div>
-//                     </div>
-//                     <div className="flex flex-row">
-//                       <div style={{ width: 50, height: 50 }}>
-//                         {data.Type2 && Dice_Image(data.Type2)}
-//                       </div>
-//                       <div className="p-2" style={{ width: 60, height: 50 }}>
-//                         {data.Roll2 && data.Roll2}
-//                       </div>
-//                       <div>{data.Eff2 && data.Eff2}</div>
-//                     </div>
-//                     <div className="flex flex-row">
-//                       <div style={{ width: 50, height: 50 }}>
-//                         {data.Type3 && Dice_Image(data.Type3)}
-//                       </div>
-//                       <div className="p-2" style={{ width: 60, height: 50 }}>
-//                         {data.Roll3 && data.Roll3}
-//                       </div>
-//                       <div>{data.Eff3 && data.Eff3}</div>
-//                     </div>
-//                     <div className="flex flex-row">
-//                       <div style={{ width: 50, height: 50 }}>
-//                         {data.Type4 && Dice_Image(data.Type4)}
-//                       </div>
-//                       <div className="p-2" style={{ width: 60, height: 50 }}>
-//                         {data.Roll4 && data.Roll4}
-//                       </div>
-//                       <div>{data.Eff4 && data.Eff4}</div>
-//                     </div>
-//                     <div className="flex flex-row">
-//                       <div style={{ width: 50, height: 50 }}>
-//                         {data.Type5 && Dice_Image(data.Type5)}
-//                       </div>
-//                       <div className="p-2" style={{ width: 60, height: 50 }}>
-//                         {data.Roll5 && data.Roll5}
-//                       </div>
-//                       <div>{data.Eff5 && data.Eff5}</div>
-//                     </div>
-//                   </div>
-//                 </div>
-//               </div>
-//             </div>
-//           </CardActions>
-//         </Card>
-//       </div>
-//     );
-//   };

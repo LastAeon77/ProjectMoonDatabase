@@ -24,26 +24,12 @@ const generate_office_list = (
     <div key={id}>
       <div className="flex flex-col w-full">
         <ListItemButton onClick={click_office_button}>
-          <p className="text-2xl text-white">{office.Name}</p>
+          <p className="text-xl text-white">{office.Name}</p>
         </ListItemButton>
         <Collapse in={id === activeoffice} timeout="auto" unmountOnExit>
           <List>
-            <div className='flex flex-row'>
-              <div>
-                {cards.map((object, i) =>
-                  i % 3 == 0 ? One_Card(object) : null
-                )}
-              </div>
-              <div>
-                {cards.map((object, i) =>
-                  i % 3 == 1 ? One_Card(object) : null
-                )}
-              </div>
-              <div>
-                {cards.map((object, i) =>
-                  i % 3 == 2 ? One_Card(object) : null
-                )}
-              </div>
+            <div className="flex flex-wrap items-center justify-center">
+              {cards.map((object, i) => One_Card(object))}
             </div>
           </List>
         </Collapse>
@@ -76,7 +62,7 @@ const generate_rank_list = (
     >
       <div className="flex flex-col w-full">
         <ListItemButton onClick={click_rank_button}>
-          <p className="text-3xl text-white">{rank.Name}</p>
+          <p className="text-2xl text-white">{rank.Name}</p>
         </ListItemButton>
         <Collapse in={id === activerank} timeout="auto" unmountOnExit>
           <List component="div" disablePadding>
@@ -127,7 +113,7 @@ const Cards = () => {
       <div className="bg-lor bg-fixed overflow-auto h-screen">
         <div className="flex flex-col items-center">
           <List
-            sx={{ width: "100%", maxWidth: 1800, bgcolor: "black" }}
+            sx={{ width: "100%", maxWidth: 1300, bgcolor: "black" }}
             component="nav"
             aria-labelledby="nested-list-subheader"
           >

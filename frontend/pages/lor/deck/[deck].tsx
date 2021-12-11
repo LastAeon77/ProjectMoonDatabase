@@ -31,7 +31,7 @@ const makeDeckPic = (cards: Array<combination>) => {
         <img
           src={card.ImgPath && imgur_or_static(card.ImgPath)}
           alt="Image"
-          width={240}
+          width={160}
           height={100}
         />
       );
@@ -58,12 +58,12 @@ const One_Deck = () => {
   return (
     <div className="bg-lor bg-fixed overflow-auto bg-contain h-screen">
       <div className="flex flex-col items-center w-full">
-        <div className="decoration-clone h-screen w-3/4 px-5 text-white content-center bg-black bg-opacity-80">
+        <div className="decoration-clone h-screen w-5/6 px-5 text-white content-center bg-black bg-opacity-80">
           <div className="flex flex-col items-center w-full">
             <div className="text-6xl mb-10 text-yellow-300">{deck?.name}</div>
             <div className="flex flex-row w-full">
               <div className="w-1/2">
-                <div className="flex flex-col text-2xl">
+                <div className="flex flex-col text-lg">
                   <div className="m-2">Rank: {deck?.Recc_Rank}</div>
                   <div className="m-2">Best Floor: {deck?.Recc_Floor}</div>
                   <div className="m-2">Page: {deck?.Recc_Page}</div>
@@ -71,12 +71,12 @@ const One_Deck = () => {
                   <div className="m-2">Effects:</div>
                   <div className="flex flex-col mt-2 ml-5">
                     {deck?.effect.map((object, i) => (
-                      <div className="mb-4" key={i}>{object}</div>
+                      <div className="mb-4" key={i}>- {object}</div>
                     ))}
                   </div>
                 </div>
               </div>
-              <div className="w-1/2">
+              <div className="w-1/2 ml-20">
                 {deck && makeDeckPic(combine_img_count(deck))}
               </div>
             </div>

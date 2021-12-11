@@ -17,13 +17,14 @@ const AbnoOne = () => {
       .catch((error) => console.log(error));
   }, []);
   return (
-    <div className="bg-lor bg-fixed font-square h-screen">
+    <div className="bg-lor bg-fixed h-screen">
       <div className="flex flex-col items-center text-white">
         <Box
           key={abno?.id}
           sx={{
-            width: 1800,
-            height: 850,
+            width: 5/6,
+            minHeight: 650,
+            maxHeight: 800,
             backgroundColor: "black",
             borderRadius: "2rem",
           }}
@@ -38,7 +39,7 @@ const AbnoOne = () => {
           }}
         >
           <div className="flex flex-col justify-center items-center">
-            <div className="text-6xl">{abno?.name}</div>
+            <div className="text-5xl mb-4 mt-3">{abno?.name}</div>
             <div className="flex flex-row">
               <div className="flex flex-col w-1/2 m-2">
                 <img
@@ -48,10 +49,10 @@ const AbnoOne = () => {
                   height={400}
                 />
               </div>
-              <div className="flex-1 w-1/2">
-                <div className="flex flex-col text-4xl items-center">
-                  <div>Emotion Level: {abno?.emotion_level}</div>
-                  <div className="mt-20">{abno?.description}</div>
+              <div className="flex-1 w-1/2 ml-3">
+                <div className="flex flex-col text-2xl items-center">
+                  <div className="text-4xl">Emotion Level: {abno?.emotion_level}</div>
+                  <div className="mt-20 mb-10">{abno?.description}</div>
                   <br></br>
                   <div
                     style={{

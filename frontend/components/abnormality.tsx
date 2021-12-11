@@ -16,7 +16,7 @@ export const one_abno = (data: abno_card) => {
     <Box
       key={data.id}
       sx={{
-        width: 600,
+        width: 400,
         height: 260,
         backgroundColor: "black",
         borderRadius: "1em",
@@ -34,21 +34,21 @@ export const one_abno = (data: abno_card) => {
       }}
     >
       <Link passHref href={`abno/${data?.id}`}>
-        <div className="flex flex-col items-center">
+        <div className="flex flex-col items-center text-sm">
           <div className="text-white text-2xl">{data?.name}</div>
           <div className="flex flex-row items-left text-white">
-            <div className="flex flex-col items-center justify-center">
-              <div className="w-48">
+            <div className="flex flex-col items-center justify-center w-1/2">
+              <div className="ml-6">
                 <img
                   src={data.ImgPath && imgur_or_static(data.ImgPath)}
                   alt="Image"
-                  width={800}
+                  width={400}
                   height={400}
                 />
               </div>
-              <div>{data?.emotion_level}</div>
+              <div className="text-2xl">Emotion {data?.emotion_level}</div>
             </div>
-            <div>{data?.effects}</div>
+            <div className="w-1/2">{data?.effects}</div>
           </div>
         </div>
       </Link>

@@ -27,7 +27,7 @@ const lor = () => {
                       component="img"
                       height="140"
                       alt="Finn"
-                      image="http://localhost:8000/static/LoR_Data/Card/Canard/Basic/Basic_Thrust.png"
+                      image="https://aeonmoon2.herokuapp.com/static/LoR_Data/Card/Canard/Basic/Basic_Thrust.png"
                     />
                     <CardContent>
                       <Typography variant="h5" component="div" color="yellow">
@@ -52,7 +52,7 @@ const lor = () => {
                       component="img"
                       height="100"
                       alt="Finn"
-                      image="http://localhost:8000/static/LoR_Data/Abnormality%20Pages/Floor%20of%20History/Happy%20Teddy%20Bear/Happy%20Memories.png"
+                      image="https://aeonmoon2.herokuapp.com/static/LoR_Data/Abnormality%20Pages/Floor%20of%20History/Happy%20Teddy%20Bear/Happy%20Memories.png"
                     />
                     <CardContent>
                       <Typography variant="h5" component="div" color="yellow">
@@ -77,7 +77,7 @@ const lor = () => {
                       component="img"
                       height="100"
                       alt="Finn"
-                      image="http://localhost:8000/static/LoR_Data/Page.png"
+                      image="https://aeonmoon2.herokuapp.com/static/LoR_Data/Page.png"
                       sx={{ width: "55%", marginLeft: "23%" }}
                     />
                     <CardContent>

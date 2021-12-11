@@ -61,7 +61,7 @@ const Deck = () => {
       .then((res) =>
         setdecks(
           res.data.sort((a: deck, b: deck) =>
-            a.id > b.id ? -1 : 0
+            a.id < b.id ? 1 : b.id < a.id ? -1 : 0
           ) as Array<deck>
         )
       )
@@ -76,13 +76,13 @@ const Deck = () => {
         <Button variant="contained" type="submit" onClick={makedeck}>
           Make your deck!
         </Button>
-        <div className="flex flex-row items-center justify-center text-white w-full">
+        <div className="flex flex-row items-center justify-center text-white w-4/5">
           <List
             sx={{ width: "100%", maxWidth: 1800, bgcolor: "#272B30" }}
             component="nav"
             aria-labelledby="nested-list-subheader"
           >
-            <div className="flex flex-row w-full justify-center items-center w-full bg-gray-400">
+            <div className="flex flex-row w-full justify-center items-center bg-gray-400">
               <div className="w-1/12 ml-3"> ID</div>
               <div className="w-4/12">Name</div>
               <div className="w-4/12">Creator</div>

@@ -24,19 +24,17 @@ function MyApp({ Component, pageProps }: AppProps) {
   }, [router]);
   if (pageLoading) {
     return (
-      <div className="bg-loading bg-fixed overflow-auto w-screen h-screen">
+      <div className="bg-loading bg-contain h-screen">
       </div>
     );
   } else {
     return (
-      <div className="font-lor font-extrabold text-xl">
+      <div className="font-lor font-extrabold">
         <Navbar />
         <Component {...pageProps} />
       </div>
     );
   }
-  // return ({pageLoading ? (<div>Loading</div>) : <Component {...pageProps} />})
-  // return (<Component {...pageProps} />)
 }
 
 export default MyApp;
