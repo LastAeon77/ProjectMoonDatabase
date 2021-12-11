@@ -11,63 +11,94 @@ class Migration(migrations.Migration):
 
     dependencies = [
         migrations.swappable_dependency(settings.AUTH_USER_MODEL),
-        ('LoR', '0001_initial'),
+        ("LoR", "0001_initial"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='guide',
-            name='creator',
-            field=models.ForeignKey(null=True, on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL),
+            model_name="guide",
+            name="creator",
+            field=models.ForeignKey(
+                null=True,
+                on_delete=django.db.models.deletion.CASCADE,
+                to=settings.AUTH_USER_MODEL,
+            ),
         ),
         migrations.AddField(
-            model_name='guide',
-            name='required_decks',
-            field=models.ManyToManyField(through='LoR.RelGuide', to='LoR.Deck'),
+            model_name="guide",
+            name="required_decks",
+            field=models.ManyToManyField(through="LoR.RelGuide", to="LoR.Deck"),
         ),
         migrations.AddField(
-            model_name='deck',
-            name='Recc_Floor',
-            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.CASCADE, to='LoR.office'),
+            model_name="deck",
+            name="Recc_Floor",
+            field=models.ForeignKey(
+                blank=True,
+                null=True,
+                on_delete=django.db.models.deletion.CASCADE,
+                to="LoR.office",
+            ),
         ),
         migrations.AddField(
-            model_name='deck',
-            name='Recc_Page',
-            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.CASCADE, to='LoR.page'),
+            model_name="deck",
+            name="Recc_Page",
+            field=models.ForeignKey(
+                blank=True,
+                null=True,
+                on_delete=django.db.models.deletion.CASCADE,
+                to="LoR.page",
+            ),
         ),
         migrations.AddField(
-            model_name='deck',
-            name='Recc_Rank',
-            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.CASCADE, to='LoR.rank'),
+            model_name="deck",
+            name="Recc_Rank",
+            field=models.ForeignKey(
+                blank=True,
+                null=True,
+                on_delete=django.db.models.deletion.CASCADE,
+                to="LoR.rank",
+            ),
         ),
         migrations.AddField(
-            model_name='deck',
-            name='cards',
-            field=models.ManyToManyField(through='LoR.RelDeck', to='LoR.Card'),
+            model_name="deck",
+            name="cards",
+            field=models.ManyToManyField(through="LoR.RelDeck", to="LoR.Card"),
         ),
         migrations.AddField(
-            model_name='deck',
-            name='creator',
-            field=models.ForeignKey(null=True, on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL),
+            model_name="deck",
+            name="creator",
+            field=models.ForeignKey(
+                null=True,
+                on_delete=django.db.models.deletion.CASCADE,
+                to=settings.AUTH_USER_MODEL,
+            ),
         ),
         migrations.AddField(
-            model_name='deck',
-            name='effect',
-            field=models.ManyToManyField(to='LoR.Effects'),
+            model_name="deck",
+            name="effect",
+            field=models.ManyToManyField(to="LoR.Effects"),
         ),
         migrations.AddField(
-            model_name='character',
-            name='Page',
-            field=models.ForeignKey(null=True, on_delete=django.db.models.deletion.CASCADE, to='LoR.page'),
+            model_name="character",
+            name="Page",
+            field=models.ForeignKey(
+                null=True, on_delete=django.db.models.deletion.CASCADE, to="LoR.page"
+            ),
         ),
         migrations.AddField(
-            model_name='card',
-            name='office',
-            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='LoR.office'),
+            model_name="card",
+            name="office",
+            field=models.ForeignKey(
+                on_delete=django.db.models.deletion.CASCADE, to="LoR.office"
+            ),
         ),
         migrations.AddField(
-            model_name='abnocards',
-            name='office',
-            field=models.ForeignKey(limit_choices_to={'Rank': 7}, on_delete=django.db.models.deletion.CASCADE, to='LoR.office'),
+            model_name="abnocards",
+            name="office",
+            field=models.ForeignKey(
+                limit_choices_to={"Rank": 7},
+                on_delete=django.db.models.deletion.CASCADE,
+                to="LoR.office",
+            ),
         ),
     ]

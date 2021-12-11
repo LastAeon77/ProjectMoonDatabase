@@ -146,27 +146,47 @@ class Card(models.Model):
     )
 
     Type1 = models.CharField(
-        max_length=2, choices=Types.choices, null=True, blank=True, default=None,
+        max_length=2,
+        choices=Types.choices,
+        null=True,
+        blank=True,
+        default=None,
     )
     Roll2 = models.CharField(max_length=10, null=True, blank=True)
     Eff2 = models.CharField(max_length=200, null=True, blank=True)
     Type2 = models.CharField(
-        max_length=2, choices=Types.choices, null=True, blank=True, default=None,
+        max_length=2,
+        choices=Types.choices,
+        null=True,
+        blank=True,
+        default=None,
     )
     Roll3 = models.CharField(max_length=10, null=True, blank=True)
     Eff3 = models.CharField(max_length=200, null=True, blank=True)
     Type3 = models.CharField(
-        max_length=2, choices=Types.choices, null=True, blank=True, default=None,
+        max_length=2,
+        choices=Types.choices,
+        null=True,
+        blank=True,
+        default=None,
     )
     Roll4 = models.CharField(max_length=10, null=True, blank=True)
     Eff4 = models.CharField(max_length=200, null=True, blank=True)
     Type4 = models.CharField(
-        max_length=2, choices=Types.choices, null=True, blank=True, default=None,
+        max_length=2,
+        choices=Types.choices,
+        null=True,
+        blank=True,
+        default=None,
     )
     Roll5 = models.CharField(max_length=10, null=True, blank=True)
     Eff5 = models.CharField(max_length=200, null=True, blank=True)
     Type5 = models.CharField(
-        max_length=2, choices=Types.choices, null=True, blank=True, default=None,
+        max_length=2,
+        choices=Types.choices,
+        null=True,
+        blank=True,
+        default=None,
     )
     slug = models.SlugField(null=True, unique=True)
 
@@ -196,10 +216,16 @@ class Deck(models.Model):
         Office, on_delete=models.CASCADE, null=True, blank=True
     )
     Recc_Page = models.ForeignKey(
-        Page, on_delete=models.CASCADE, null=True, blank=True,
+        Page,
+        on_delete=models.CASCADE,
+        null=True,
+        blank=True,
     )
     Recc_Rank = models.ForeignKey(
-        Rank, on_delete=models.CASCADE, blank=True, null=True,
+        Rank,
+        on_delete=models.CASCADE,
+        blank=True,
+        null=True,
     )
     effect = models.ManyToManyField(Effects)
     show = models.BooleanField(default=True)
@@ -278,3 +304,108 @@ class AbnoCards(models.Model):
 
     def __str__(self):
         return self.name
+
+
+# model for Card
+class FanCards(models.Model):
+    Name = models.CharField(max_length=200, unique=True)
+    creator = models.ForeignKey(get_user_model(), on_delete=models.CASCADE, null=True)
+
+    Rarity_CHOICES = [
+        (PAPERBACK, "Paperback"),
+        (HARDCOVER, "Hardcover"),
+        (LIMITED, "Limited"),
+        (OBJETDART, "Objet d'art"),
+        (EGO, "EGO"),
+    ]
+    Obtainable = models.BooleanField(default=True)
+    Cost = models.IntegerField()
+    On_Play_Effect = models.TextField(null=True, blank=True)
+    Dice_Number = models.IntegerField(null=True)
+    office = models.ForeignKey(Office, on_delete=models.CASCADE)
+    ImgPath = models.CharField(max_length=300, null=True)
+    Roll1 = models.CharField(max_length=10, null=True, blank=True)
+    Eff1 = models.CharField(max_length=200, null=True, blank=True)
+
+    # Class to restirct available choices for the box
+    class Types(models.TextChoices):
+        BLUNT = "BL", laz("Blunt")
+        PIERCE = "PI", laz("Pierce")
+        SLASH = "SL", laz("Slash")
+        EVADE = "EV", laz("Evade")
+        BLOCK = "BO", laz("Block")
+        BLOCKCOUNTER = "CB", laz("Block Counter")
+        PIERCECOUNTER = "CP", laz("Pierce Counter")
+        SLASHCOUNTER = "CS", laz("Slash Counter")
+        EVADECOUNTER = "CE", laz("Evade Counter")
+        BLUNTCOUNTER = "CC", laz("Blunt Counter")
+
+    # Restrict type of Card
+    class CardTypes(models.TextChoices):
+        MELEE = "M", laz("Melee")
+        RANGED = "R", laz("Ranged")
+
+    CardType = models.CharField(
+        max_length=1,
+        choices=CardTypes.choices,
+        null=True,
+        blank=True,
+        default=CardTypes.MELEE,
+    )
+
+    Type1 = models.CharField(
+        max_length=2,
+        choices=Types.choices,
+        null=True,
+        blank=True,
+        default=None,
+    )
+    Roll2 = models.CharField(max_length=10, null=True, blank=True)
+    Eff2 = models.CharField(max_length=200, null=True, blank=True)
+    Type2 = models.CharField(
+        max_length=2,
+        choices=Types.choices,
+        null=True,
+        blank=True,
+        default=None,
+    )
+    Roll3 = models.CharField(max_length=10, null=True, blank=True)
+    Eff3 = models.CharField(max_length=200, null=True, blank=True)
+    Type3 = models.CharField(
+        max_length=2,
+        choices=Types.choices,
+        null=True,
+        blank=True,
+        default=None,
+    )
+    Roll4 = models.CharField(max_length=10, null=True, blank=True)
+    Eff4 = models.CharField(max_length=200, null=True, blank=True)
+    Type4 = models.CharField(
+        max_length=2,
+        choices=Types.choices,
+        null=True,
+        blank=True,
+        default=None,
+    )
+    Roll5 = models.CharField(max_length=10, null=True, blank=True)
+    Eff5 = models.CharField(max_length=200, null=True, blank=True)
+    Type5 = models.CharField(
+        max_length=2,
+        choices=Types.choices,
+        null=True,
+        blank=True,
+        default=None,
+    )
+    slug = models.SlugField(null=True, unique=True)
+
+    def __str__(self):
+        return self.Name
+
+    def getid(self):
+        return self.pk
+
+    def check_if_static(self):
+        if self.ImgPath[0:4] == "http":
+            return False
+        else:
+            return True
