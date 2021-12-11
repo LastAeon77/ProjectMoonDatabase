@@ -17,7 +17,7 @@ export const one_abno = (data: abno_card) => {
       key={data.id}
       sx={{
         width: 600,
-        height: 210,
+        height: 260,
         backgroundColor: "black",
         borderRadius: "1em",
         "&:hover": {

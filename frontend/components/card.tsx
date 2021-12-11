@@ -172,7 +172,7 @@ export const One_Card = (data2: game_card | game_card_light) => {
   // Generate the Card Element
   const data = destroy_NULL(data2);
   return (
-    <Link href={`/lor/card/${data?.slug}`} passHref>
+    <Link href={`/lor/card/${data?.slug}`} passHref key={data?.id}>
       <div className="text-yellow-100">
         <Card
           sx={{
@@ -191,78 +191,78 @@ export const One_Card = (data2: game_card | game_card_light) => {
           }}
         >
           <CardActions>
-              <div className="flex flex-col items-center">
-                <div className="text-white text-2xl">{data?.Name}</div>
-                <div className="flex flex-row items-left text-yellow-100">
-                  <div className="flex flex-col items-center">
-                    <div className="flex-1">
-                      <CardMedia
-                        component="img"
-                        height="400"
-                        alt={data.Name}
-                        image={String(
-                          data.ImgPath && imgur_or_static(data.ImgPath)
-                        )}
-                      />
-                    </div>
-                    <div className="flex-1 text-4xl">{data?.Cost}</div>
-                  </div>
+            <div className="flex flex-col items-center">
+              <div className="text-white text-2xl">{data?.Name}</div>
+              <div className="flex flex-row items-left text-yellow-100">
+                <div className="flex flex-col items-center">
                   <div className="flex-1">
-                    <div className="flex flex-col">
-                      <div className="p-2 flex-wrap">
-                        {data.On_Play_Effect && data.On_Play_Effect}
+                    <CardMedia
+                      component="img"
+                      height="400"
+                      alt={data.Name}
+                      image={String(
+                        data.ImgPath && imgur_or_static(data.ImgPath)
+                      )}
+                    />
+                  </div>
+                  <div className="flex-1 text-4xl">{data?.Cost}</div>
+                </div>
+                <div className="flex-1">
+                  <div className="flex flex-col">
+                    <div className="p-2 flex-wrap">
+                      {data.On_Play_Effect && data.On_Play_Effect}
+                    </div>
+                    <div className="flex flex-row">
+                      <div style={{ width: 50, height: 50 }}>
+                        {data.Type1 && Dice_Image(data.Type1)}
                       </div>
-                      <div className="flex flex-row">
-                        <div style={{ width: 50, height: 50 }}>
-                          {data.Type1 && Dice_Image(data.Type1)}
-                        </div>
-                        <div className="p-2" style={{ width: 60, height: 50 }}>
-                          {data.Roll1 && data.Roll1}
-                        </div>
-                        <div style={{ width: 300 }} className="flex-wrap">
-                          {data.Eff1 && data.Eff1}
-                        </div>
+                      <div className="p-2" style={{ width: 60, height: 50 }}>
+                        {data.Roll1 && data.Roll1}
                       </div>
-                      <div className="flex flex-row">
-                        <div style={{ width: 50, height: 50 }}>
-                          {data.Type2 && Dice_Image(data.Type2)}
-                        </div>
-                        <div className="p-2" style={{ width: 60, height: 50 }}>
-                          {data.Roll2 && data.Roll2}
-                        </div>
-                        <div>{data.Eff2 && data.Eff2}</div>
+                      <div style={{ width: 300 }} className="flex-wrap">
+                        {data.Eff1 && data.Eff1}
                       </div>
-                      <div className="flex flex-row">
-                        <div style={{ width: 50, height: 50 }}>
-                          {data.Type3 && Dice_Image(data.Type3)}
-                        </div>
-                        <div className="p-2" style={{ width: 60, height: 50 }}>
-                          {data.Roll3 && data.Roll3}
-                        </div>
-                        <div>{data.Eff3 && data.Eff3}</div>
+                    </div>
+                    <div className="flex flex-row">
+                      <div style={{ width: 50, height: 50 }}>
+                        {data.Type2 && Dice_Image(data.Type2)}
                       </div>
-                      <div className="flex flex-row">
-                        <div style={{ width: 50, height: 50 }}>
-                          {data.Type4 && Dice_Image(data.Type4)}
-                        </div>
-                        <div className="p-2" style={{ width: 60, height: 50 }}>
-                          {data.Roll4 && data.Roll4}
-                        </div>
-                        <div>{data.Eff4 && data.Eff4}</div>
+                      <div className="p-2" style={{ width: 60, height: 50 }}>
+                        {data.Roll2 && data.Roll2}
                       </div>
-                      <div className="flex flex-row">
-                        <div style={{ width: 50, height: 50 }}>
-                          {data.Type5 && Dice_Image(data.Type5)}
-                        </div>
-                        <div className="p-2" style={{ width: 60, height: 50 }}>
-                          {data.Roll5 && data.Roll5}
-                        </div>
-                        <div>{data.Eff5 && data.Eff5}</div>
+                      <div>{data.Eff2 && data.Eff2}</div>
+                    </div>
+                    <div className="flex flex-row">
+                      <div style={{ width: 50, height: 50 }}>
+                        {data.Type3 && Dice_Image(data.Type3)}
                       </div>
+                      <div className="p-2" style={{ width: 60, height: 50 }}>
+                        {data.Roll3 && data.Roll3}
+                      </div>
+                      <div>{data.Eff3 && data.Eff3}</div>
+                    </div>
+                    <div className="flex flex-row">
+                      <div style={{ width: 50, height: 50 }}>
+                        {data.Type4 && Dice_Image(data.Type4)}
+                      </div>
+                      <div className="p-2" style={{ width: 60, height: 50 }}>
+                        {data.Roll4 && data.Roll4}
+                      </div>
+                      <div>{data.Eff4 && data.Eff4}</div>
+                    </div>
+                    <div className="flex flex-row">
+                      <div style={{ width: 50, height: 50 }}>
+                        {data.Type5 && Dice_Image(data.Type5)}
+                      </div>
+                      <div className="p-2" style={{ width: 60, height: 50 }}>
+                        {data.Roll5 && data.Roll5}
+                      </div>
+                      <div>{data.Eff5 && data.Eff5}</div>
                     </div>
                   </div>
                 </div>
               </div>
+            </div>
           </CardActions>
         </Card>
       </div>

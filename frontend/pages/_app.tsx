@@ -7,7 +7,6 @@ import Navbar from "../components/navbar";
 
 axios.defaults.baseURL = "https://aeonmoon2.herokuapp.com/";
 
-console.log(process.env.URL)
 function MyApp({ Component, pageProps }: AppProps) {
   const router = useRouter();
   const [pageLoading, setPageLoading] = useState<boolean>(false);

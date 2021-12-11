@@ -1,10 +1,21 @@
 import Link from "next/link";
+// const bcrypt = require("bcrypt");
+// const saltRounds = 10;
+
+// export const encrypt_password = (password: string) => {
+//   bcrypt.hash(password, saltRounds, function (err: any, hash: any) {
+//     return password;
+//   });
+// };
 
 export const imgur_or_static = (img_link: string | undefined) => {
   // Django database sometimes has image as just links while other as pure static. We fix it here
   if (img_link) {
     if (img_link.slice(0, 8) === "LoR_Data") {
-      return `http://localhost:8000/static/${img_link}`.replaceAll(" ", "%20");
+      return `https://aeonmoon2.herokuapp.com/static/${img_link}`.replaceAll(
+        " ",
+        "%20"
+      );
     } else {
       return img_link;
     }

@@ -1,10 +1,8 @@
 import React from "react";
 import { useState, useEffect } from "react";
 import axios from "axios";
-import Link from "next/link";
-import { useRouter } from "next/router";
 import { One_Card } from "../../components/card";
-import { Button, List, ListItemButton } from "@mui/material";
+import { List, ListItemButton } from "@mui/material";
 import { office_id, rank_id, game_card_light } from "../../components/types";
 import Collapse from "@mui/material/Collapse";
 
