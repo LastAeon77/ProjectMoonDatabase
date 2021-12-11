@@ -58,7 +58,13 @@ const Deck = () => {
   useEffect(() => {
     axios
       .get("lor/api/deck")
-      .then((res) => setdecks(res.data as Array<deck>))
+      .then((res) =>
+        setdecks(
+          res.data.sort((a: deck, b: deck) =>
+            a.id > b.id ? -1 : 0
+          ) as Array<deck>
+        )
+      )
       .catch((error) => console.log(error));
   }, []);
   const makedeck = () => {

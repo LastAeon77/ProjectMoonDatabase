@@ -1,15 +1,14 @@
 import { useRouter } from "next/router";
-import { useState, useEffect } from "react";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import { Box } from "@mui/system";
 import { Button } from "@mui/material";
-import Navbar from "../components/navbar";
 import axios from "axios";
 type errors = {
   email?: string;
   username?: string;
   password?: string;
 };
+
 const Signup = () => {
   const router = useRouter();
   const prevUrl = router.query.prevUrl;

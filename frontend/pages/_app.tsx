@@ -5,8 +5,9 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import Navbar from "../components/navbar";
 
-// axios.defaults.baseURL = process.env.URL"http://localhost:8000/";
-axios.defaults.baseURL = process.env.URL;
+axios.defaults.baseURL = "https://aeonmoon2.herokuapp.com/";
+
+console.log(process.env.URL)
 function MyApp({ Component, pageProps }: AppProps) {
   const router = useRouter();
   const [pageLoading, setPageLoading] = useState<boolean>(false);
